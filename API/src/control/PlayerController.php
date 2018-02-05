@@ -16,8 +16,15 @@ class PlayerController {
 
     public function getVilles(Request $req, Response $resp, $args){
         
-        $villes = Ville::all();
+        $villes = Serie::all();
         $resp = $resp->withJson($villes);
+        return $resp;
+    }
+
+    public function getPhotos(Request $req, Response $resp, $args){
+        
+        $photos = Photo::where('id_ville', '=', $args['id'])->get();
+        $resp = $resp->withJson($photos);
         return $resp;
     }
 }
