@@ -5,13 +5,12 @@ namespace geo\control;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \lbs\model\Photo;
-use \lbs\model\Score;
-use \lbs\model\Photo;
-use \lbs\model\Niveau;
-use \lbs\model\User;
-use \lbs\model\Ville;
-use \lbs\model\Serie;
+use \geo\model\Photo;
+use \geo\model\Score;
+use \geo\model\Niveau;
+use \geo\model\User;
+use \geo\model\Ville;
+use \geo\model\Serie;
 
 class GeoController {
 
