@@ -21,3 +21,8 @@ $db->bootEloquent();
 $configuration = array_merge($settings, $errors, $dependencies);
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
+
+$app->get('//{id}[/]','\lbs\control\PlayerController:getCarte');
+
+
+$app->run();
