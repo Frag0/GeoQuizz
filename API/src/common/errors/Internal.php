@@ -2,7 +2,7 @@
 /**
 * 
 */
-namespace lbs\common\errors;
+namespace geo\common\errors;
 
 class Internal
 {
