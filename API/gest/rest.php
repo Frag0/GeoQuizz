@@ -26,6 +26,6 @@ $app->post('/adduser[/]','\geo\control\GestController:addUser');
 
 $app->post('/addserie[/]','\geo\control\GestController:addSerie');
 
-$app->get('/test[/]','\geo\control\GestController:Test');
+$app->get('/user/{id}[/]','\geo\control\GestController:user');
 
 $app->run();
