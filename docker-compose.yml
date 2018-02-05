@@ -8,7 +8,7 @@
 # accès au service adminer : http://localhost:8080
 # accès au service mysql depuis le container api.public : utiliser le hostname "db"
 
-version: "1"
+version: "3"
 networks:
   geoquizz_network:
     driver: bridge
