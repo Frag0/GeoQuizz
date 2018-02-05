@@ -25,4 +25,11 @@ class PlayerController {
         $resp = $resp->withJson($photos);
         return $resp;
     }
+
+    public function getParties(Request $req, Response $resp, $args){
+        
+        $parties = Partie::all();
+        $resp = $resp->withJson($parties);
+        return $resp;
+    }
 }

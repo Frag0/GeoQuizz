@@ -28,4 +28,6 @@ $app->get('/series[/]','\geo\control\PlayerController:getSeries');
 
 $app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
 
+$app->get('/parties[/]','\geo\control\PlayerController:getParties');
+
 $app->run();
