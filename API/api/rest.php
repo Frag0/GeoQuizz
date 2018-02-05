@@ -10,7 +10,7 @@ $settings = require_once '../src/conf/api_settings.php';
 $errors = require_once '../src/conf/api_errors.php';
 $dependencies = require_once '../src/conf/api_deps.php';
 
-$config = parse_ini_file("../src/conf/lbs.db.conf.ini");
+$config = parse_ini_file("../src/conf/geo.db.conf.ini");
 
 $db = new Illuminate\Database\Capsule\Manager();
 

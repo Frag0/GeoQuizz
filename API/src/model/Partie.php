@@ -4,9 +4,9 @@
  */
 namespace geo\model;
 
-class User extends \Illuminate\Database\Eloquent\Model
+class Partie extends \Illuminate\Database\Eloquent\Model
 {
-    protected $table = 'user';
+    protected $table = 'partie';
     protected $primaryKey = 'id';
     public $timestamps = false;
     public $incrementing = false;
