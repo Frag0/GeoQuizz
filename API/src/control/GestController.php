@@ -14,6 +14,7 @@ use \geo\model\Serie;
 use Ramsey\Uuid\Uuid;
 
 class GestController {
+
     public function addUser(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
         $user = new User;
@@ -25,7 +26,19 @@ class GestController {
         $user->save();
         $resp = $resp->withStatus(201);
         $resp = $resp->withHeader('Location', "/user/".$user->id);
-        $resp = $resp->withJson(array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail));
+        $resp = $resp->withJson(array('user' => array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail)));
+        return $resp;
+    }
+
+    public function user(Request $req, Response $resp, $args){
+        try{
+            $user = User::findorFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /user/'.$args['id']));
+            return $resp;
+        }
+        $resp = $resp->withJson(array('id' => $user->id, 'identifiant' => $user->identifiant, 'mail' => $user->mail));
         return $resp;
     }
 }
