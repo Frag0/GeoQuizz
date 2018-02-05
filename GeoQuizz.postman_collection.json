@@ -1,0 +1,164 @@
+{
+	"info": {
+		"name": "GeoQuizz",
+		"_postman_id": "7ea09580-16ba-a33b-9702-deec178ae2db",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/adduser",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"adduser"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "test",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "test@test.fr",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/user/f2828f50-5569-4074-9c9e-eb4a44867ff4",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"user",
+						"f2828f50-5569-4074-9c9e-eb4a44867ff4"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "AddPhoto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "http://google.fr",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "48",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "latitude",
+							"value": "6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "id_ville",
+							"value": "d04a64c8-11c8-4873-88a7-f303a967cd80",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/addphoto",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"addphoto"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
