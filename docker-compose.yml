@@ -1,38 +1,34 @@
-#
-# docker-compose file pour le déploiement initial de l'application lbs
-# Documentation complète : https://bitbucket.org/canals5/docker-things
+# docker-compose file pour le déploiement initial de l'application GeoQuizz
 #
 # ajouter les vhosts des services web dans le fichier /etc/vhosts
 # de la machine hôte :
 # exemple pour le service api.public :
-# 127.0.0.1   api.lbs.local
-# pour accéder à ce service : https://api.lbs.local:10443
-#                      ou   :  http://api.lbs.local:10080
+# 127.0.0.1   api.geoquizz.local
+# pour accéder à ce service :  http://api.geoquizz.local:10101
 # accès au service adminer : http://localhost:8080
 # accès au service mysql depuis le container api.public : utiliser le hostname "db"
 
-version: "3"
+version: "1"
 networks:
-  lbs_network:
+  geoquizz_network:
     driver: bridge
 
 services:
   api.public:
     image: canals/php
-    container_name: api.public.lbs.local
+    container_name: api.public.geoquizz.local
     environment:
-      - VHOST_HOSTNAME=api.lbs.local
+      - VHOST_HOSTNAME=api.geoquizz.local
       - VHOST_DOCROOT=/var/www/api
 #     - http_proxy=http://www-cache.iutnc.univ-lorraine.fr:3128/
 #     - https_proxy=http://www-cache.iutnc.univ-lorraine.fr:3128/
     ports:
-      - "10080:80"
-      - "10443:443"
+      - "10101:80"
     volumes :
       - ./api:/var/www/api
       - ./src:/var/www/src
     networks:
-      - lbs_network
+      - geoquizz_network
     links :
       - mysql:db
 
@@ -41,47 +37,46 @@ services:
 #############################
   api.gest:
     image: canals/php
-    container_name: api.gest.lbs.local
+    container_name: api.gest.geoquizz.local
     environment:
-      - VHOST_HOSTNAME=gest.lbs.local
+      - VHOST_HOSTNAME=gest.geoquizz.local
       - VHOST_DOCROOT=/var/www/gest
 #     - http_proxy=http://www-cache.iutnc.univ-lorraine.fr:3128/
 #     - https_proxy=http://www-cache.iutnc.univ-lorraine.fr:3128/
     ports:
-      - "11080:80"
-      - "11443:443"
+      - "10111:80"
     volumes :
       - ./gest:/var/www/gest
       - ./src:/var/www/src
     networks:
-      - lbs_network
+      - geoquizz_network
     links :
       - mysql:db
       - api.public:api.public
 #############################
-# mysql + adminer / can be replaced by mariadb
+# mysql + adminer
 #############################
   mysql:
     image: mariadb:latest
-    container_name: maria.lbs.local
+    container_name: maria.geoquizz.local
     environment:
-      - MYSQL_ROOT_PASSWORD=root123
-      - MYSQL_USER=lbs
-      - MYSQL_PASSWORD=lbs
-      - MYSQL_DATABASE=lbs
+      - MYSQL_ROOT_PASSWORD=georoot
+      - MYSQL_USER=geo
+      - MYSQL_PASSWORD=geo
+      - MYSQL_DATABASE=geoquizz
     ports:
       - "3603:3306"
     networks:
-      - lbs_network
+      - geoquizz_network
     volumes :
       - ./sql:/var/sql
 
   adminer:
      image: adminer
-     container_name: admin.lbs.local
+     container_name: admin.geoquizz.local
      ports:
        - "8080:8080"
      networks:
-      - lbs_network
+      - geoquizz_network
      links:
        - mysql:db
