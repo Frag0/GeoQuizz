@@ -7,9 +7,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \geo\model\Photo;
 use \geo\model\Partie;
-use \geo\model\Niveau;
 use \geo\model\User;
-use \geo\model\Ville;
 use \geo\model\Serie;
 use Ramsey\Uuid\Uuid;
 
@@ -42,7 +40,7 @@ class GestController {
         return $resp;
     }
 
-     public function addSerie(Request $req, Response $resp, $args){
+    public function addSerie(Request $req, Response $resp, $args){
 
         $parsedBody = $req->getParsedBody();
         $serie = new Serie;
@@ -55,8 +53,15 @@ class GestController {
         return $resp;
     }
 
-    public function Test(Request $req, Response $resp, $args){
-        echo "test";
+    public function addPhotos(Request $req, Response $resp, $args){
+
+        $parsedBody = $req->getParsedBody();
+        $photo = new Photo;
+        $photo->url = filter_var($parsedBody['url'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $photo->longitude = filter_var($parsedBody['longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $photo->latitude = filter_var($parsedBody['latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $photo->id_ville = $args['id'];
+        $photo->save();
         return $resp;
     }
 }
