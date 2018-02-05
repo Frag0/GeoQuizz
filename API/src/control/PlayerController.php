@@ -15,7 +15,7 @@ use \geo\model\Serie;
 class PlayerController {
 
     public function getVilles(Request $req, Response $resp, $args){
-        
+
         $villes = Ville::all();
         $resp = $resp->withJson($villes);
         return $resp;

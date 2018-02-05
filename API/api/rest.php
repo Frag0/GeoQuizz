@@ -26,6 +26,4 @@ $app->get('/ville/{id}[/]','\lbs\control\PlayerController:getVilleId');
 
 $app->get('/villes[/]','\geo\control\PlayerController:getVilles');
 
-
-
 $app->run();
