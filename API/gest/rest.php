@@ -24,6 +24,8 @@ $app = new \Slim\App($c);
 
 $app->post('/adduser[/]','\geo\control\GestController:addUser');
 
+$app->post('/addphoto[/]','\geo\control\GestController:addPhoto');
+
 $app->get('/user/{id}[/]','\geo\control\GestController:user');
 
 $app->run();
