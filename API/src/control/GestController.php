@@ -42,7 +42,8 @@ class GestController {
         return $resp;
     }
 
-    public function addPhoto(Request $req, Response $resp, $args){
+    public function addPhoto(Request $req, Response $resp, $args)
+    {
         $parsedBody = $req->getParsedBody();
         $photo = new Photo;
         $photo->url = filter_var($parsedBody['url'], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -52,6 +53,17 @@ class GestController {
         $photo->save();
         $resp = $resp->withStatus(201);
         $resp = $resp->withJson(array('photo' => array('url' => $photo->url, 'longitude' => $photo->longitude, 'latitude' => $photo->latitude, 'id_ville' => $photo->id_ville)));
+    }
+
+     public function addSerie(Request $req, Response $resp, $args){
+        $parsedBody = $req->getParsedBody();
+        $serie = new Serie;
+        $uuid4 = Uuid::uuid4();
+        $serie->id = $uuid4;
+        $serie->ville = filter_var($parsedBody['ville'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->longitude = filter_var($parsedBody['longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->latitude = filter_var($parsedBody['latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->save();
         return $resp;
     }
 }
