@@ -24,4 +24,8 @@ $app = new \Slim\App($c);
 
 $app->post('/adduser[/]','\geo\control\GestController:addUser');
 
+$app->post('/addserie[/]','\geo\control\GestController:addSerie');
+
+$app->get('/test[/]','\geo\control\GestController:Test');
+
 $app->run();

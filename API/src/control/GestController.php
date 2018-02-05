@@ -28,4 +28,20 @@ class GestController {
         $resp = $resp->withJson(array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail));
         return $resp;
     }
+
+     public function addSerie(Request $req, Response $resp, $args){
+
+        $parsedBody = $req->getParsedBody();
+        $serie = new Serie;
+        $serie->ville = filter_var($parsedBody['ville'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->lon = filter_var($parsedBody['lon'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->lat = filter_var($parsedBody['lat'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $serie->save();
+        return $resp;
+    }
+
+    public function Test(Request $req, Response $resp, $args){
+        echo "test";
+        return $resp;
+    }
 }
