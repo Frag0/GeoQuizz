@@ -30,4 +30,6 @@ $app->post('/addserie[/]','\geo\control\GestController:addSerie');
 
 $app->get('/user/{id}[/]','\geo\control\GestController:user');
 
+$app->post('/user/signin[/]','\geo\control\GestController:login');
+
 $app->run();
