@@ -23,7 +23,7 @@ export default {
 	},
 	methods: {
 		ajouterPhoto(){
-			window.axios.post('addphoto', {
+			window.axios.post('series/'+this.$route.params.id+'/photos', {
 	        lien: this.lien,
 	      }).then(response => {
 	        //this.$router.push({path: '/series'});  

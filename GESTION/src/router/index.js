@@ -24,6 +24,10 @@ export default new Router({
     {
       path: '/serie-creation',
       component: SerieCreation
+    },
+    {
+      path: '/photo-creation',
+      component: PhotoCreation
     }
   ]
 })
