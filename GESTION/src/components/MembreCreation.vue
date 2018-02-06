@@ -36,11 +36,10 @@ export default {
 	        alert('Les mots de passe ne correspondent pas')
 	      }
 	      else {
-	        window.axios.post('adduser', {
+	        window.axios.post('users', {
 	          identifiant: this.identifiant,
 	          password: this.password,
 	        }).then(response => {
-	          console.log('Le membre '+response.data.identifiant+' a été créé')
 	          this.$router.push({path: '/connexion'})
 	        }).catch((error) => {
 	          alert(error.response.data.error.join("\n"))
