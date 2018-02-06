@@ -15,7 +15,16 @@ class PlayerController {
     public function getSeries(Request $req, Response $resp, $args){
         
         $series = Serie::all();
-        $resp = $resp->withJson($series);
+        $t = count($series);
+        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
+        $tabseries = [
+            "type"=>'collection',
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "series"=>$series
+        ];
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withJson($tabseries);
+        
         return $resp;
     }
 
