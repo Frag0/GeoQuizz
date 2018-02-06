@@ -1,0 +1,267 @@
+{
+	"info": {
+		"name": "GeoQuizz",
+		"_postman_id": "7ea09580-16ba-a33b-9702-deec178ae2db",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/adduser",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"adduser"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "test",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "test@test.fr",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/user/f2828f50-5569-4074-9c9e-eb4a44867ff4",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"user",
+						"f2828f50-5569-4074-9c9e-eb4a44867ff4"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "AddPhoto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "http://google.fr",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "48",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "latitude",
+							"value": "6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "id_ville",
+							"value": "d04a64c8-11c8-4873-88a7-f303a967cd80",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/addphoto",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"addphoto"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "Greite",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "greite",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/user/signin",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"user",
+						"signin"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "AddSerie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOlwvXC9nZXN0Lmdlb3F1aXp6LmxvY2FsOjEwMTExXC91c2VyXC9mMjgyOGY1MC01NTY5LTQwNzQtOWM5ZS1lYjRhNDQ4NjdmZjRcL3NpZ25pbiIsImF1ZCI6Imh0dHA6XC9cL2dlc3QuZ2VvcXVpenoubG9jYWw6MTAxMTFcLyIsImlhdCI6MTUxNzkwNzMwMCwiZXhwIjoxNTE3OTUwNTAwLCJpZCI6ImYyODI4ZjUwLTU1NjktNDA3NC05YzllLWViNGE0NDg2N2ZmNCIsIm1haWwiOiJncmVpdGVAZ3JlaXRlLmZyIn0.ykpJ40yTzCbCaNZBPIbayvcVFHFQ1xGjqsnUBgbbgXU2FFDNVslyDqKAWwnOb1UvYlaaHY7r9fd3TKutEP2T8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "ville",
+							"value": "Nancy",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "48",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "latitude",
+							"value": "6",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "gest.geoquizz.local:10111/addserie",
+					"host": [
+						"gest",
+						"geoquizz",
+						"local"
+					],
+					"port": "10111",
+					"path": [
+						"addserie"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

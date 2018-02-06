@@ -22,8 +22,16 @@ $configuration = array_merge($settings, $errors, $dependencies);
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
-$app->get('/ville/{id}[/]','\lbs\control\PlayerController:getVilleId');
+$app->get('/series/{id}[/]','\lbs\control\PlayerController:getSerieId');
 
-$app->get('/villes[/]','\geo\control\PlayerController:getVilles');
+$app->get('/series[/]','\geo\control\PlayerController:getSeries');
+
+$app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
+
+$app->get('/parties[/]','\geo\control\PlayerController:getParties');
+
+$app->post('/postpartie[/]','\geo\control\PlayerController:postPartie');
+
+$app->put('/putpartie[/]','\geo\control\PlayerController:putPartie');
 
 $app->run();
