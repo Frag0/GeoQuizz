@@ -2,7 +2,7 @@
 	<div>
 		<img src="../assets/adt.jpg" class="w-50" v-if="!ok">
 		<div id="mapid" class="float-right" style="height:500px; width:500px;"></div>
-		<button @click="setMap"></button>
+		<button @click="setMap" v-if="ok">Clique</button>
 	</div>
 </template>
 
@@ -13,14 +13,19 @@ export default {
 		return {
 			long : 2.3488000,
 			lat : 48.8534100,
-			series : {Ville : 'Paris', longitude : 2.3488, latitude : 48.8534},
+			series : [],
 			ok : true
 		}
+	},
+	mounted(){
+		window.axios.get('series').then(response => {
+			this.series = response.data
+		})
 	},
 	methods : {
 		setMap(){
 
-			this.ok = true;
+			this.ok = false;
 			var mymap = L.map('mapid').setView([this.lat,this.long], 11);
 			var $message = "Bienvenue sur le premier jeu au monde intéractif avec des monuments";
 			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {

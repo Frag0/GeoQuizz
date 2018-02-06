@@ -8,7 +8,7 @@ import axios from 'axios'
 Vue.config.productionTip = false
 
 window.axios = axios.create({
-  baseURL: 'http://api.geoquizz.local:10101/',
+  baseURL: 'http://api.geoquizz.local:10101',
 });
 
 new Vue({
