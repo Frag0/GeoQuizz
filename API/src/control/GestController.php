@@ -18,18 +18,7 @@ use Firebase\JWT\BeforeValidException;
 class GestController {
 
     public function addUser(Request $req, Response $resp, $args){
-        try {
-            $secret = "geoquizz";
-            $h = $req->getHeader('Authorization')[0];
-            $tokenstring = sscanf($h, "Bearer %s")[0];
-            $token = JWT::decode($tokenstring, $secret, ['HS512']);
-
-            if($token->uid != $args['id']){
-                $resp = $resp->withStatus(401);
-                $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
-                return $resp;
-            }else{
-                $parsedBody = $req->getParsedBody();
+        $parsedBody = $req->getParsedBody();
                 $user = new User;
                 $uuid4 = Uuid::uuid4();
                 $user->id = $uuid4;
@@ -41,25 +30,6 @@ class GestController {
                 $resp = $resp->withHeader('Location', "/user/".$user->id);
                 $resp = $resp->withJson(array('user' => array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail)));
                 return $resp;
-            }
-
-        }catch(ExpiredException $e) {
-            $resp = $resp->withStatus(401);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
-            return $resp;
-        }catch(SignatureInvalidException $e) {
-            $resp = $resp->withStatus(401);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
-            return $resp;
-        }catch(BeforeValidException $e) {
-            $resp = $resp->withStatus(401);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les information ne correspondent pas"));
-            return $resp;
-        }catch(\UnexpectedValueException $e) {
-            $resp = $resp->withStatus(401);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
-            return $resp;
-        }
     }
 
     public function user(Request $req, Response $resp, $args){
@@ -111,7 +81,7 @@ class GestController {
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
 
-            if($token->uid != $args['id']){
+            if($token->id != $args['id']){
                 $resp = $resp->withStatus(401);
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
                 return $resp;
