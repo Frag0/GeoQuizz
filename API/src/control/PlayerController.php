@@ -43,7 +43,7 @@ class PlayerController {
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "photos"=>$photos
-        ]
+        ];
         $resp = $resp->withStatus(201);
         $resp = $resp->withJson($tabphoto);
         return $resp;
