@@ -9,7 +9,7 @@ import axios from 'axios'
 Vue.config.productionTip = false
 
 window.axios = axios.create({
-	baseURL: 'http://api.geoquizz.local:10111'
+	baseURL: 'http://gest.geoquizz.local:10111',
 });
 
 store.subscribe((mutation, state) => {
