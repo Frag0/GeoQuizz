@@ -175,7 +175,7 @@ class GestController {
             if (password_verify($parsedBody['password'], $user->password)){
                 $secret = "geoquizz";
 
-                $token =JWT::encode( ['iss'=>'http://gest.geoquizz.local:10111/user/'.$user->id.'/signin',
+                $token =JWT::encode( ['iss'=>'http://gest.geoquizz.local:10111/user/signin',
                     'aud'=>'http://gest.geoquizz.local:10111/',
                     'iat'=>time(),
                     'exp'=>time()+43200,
