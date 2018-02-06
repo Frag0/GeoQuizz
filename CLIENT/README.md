@@ -1,6 +1,6 @@
 # client
 
-> GeoQuizz client
+> A Vue.js project
 
 ## Build Setup
 

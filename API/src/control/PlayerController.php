@@ -50,7 +50,6 @@ class PlayerController {
     }
 
     public function getParties(Request $req, Response $resp, $args){
-        
         $parties = Partie::all();
         $resp = $resp->withJson($parties);
         return $resp;
@@ -72,7 +71,7 @@ class PlayerController {
     public function putPartie(Request $req, Response $resp, $args) {
 
         $parsedBody = $req->getParsedBody();
-        $partie = Partie::find($parsedBody['id']))
+        $partie = Partie::find($parsedBody['id']);
         $partie->id = filter_var($parsedBody['id']);
         $partie->token = filter_var($parsedBody['token'], FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
