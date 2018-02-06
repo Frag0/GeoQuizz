@@ -44,13 +44,8 @@ $app->post('/series[/]','\geo\control\GestController:addSerie');
 
 $app->post('/users[/]','\geo\control\GestController:addUser');
 
-$app->get('/users/{id}[/]','\geo\control\GestController:user');
-
 $app->post('/users/signin[/]','\geo\control\GestController:login');
 
-$app->post('/login[/]','\geo\control\GestController:login');
-
-
-
+$app->get('/users/{id}[/]','\geo\control\GestController:user');
 
 $app->run();
