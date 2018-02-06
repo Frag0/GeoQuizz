@@ -29,6 +29,7 @@ class GestController {
         $user->save();
         $resp = $resp->withStatus(201);
         $resp = $resp->withHeader('Location', "/user/".$user->id);
+        $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
         $resp = $resp->withJson(array('user' => array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail)));
         return $resp;
 
@@ -44,6 +45,7 @@ class GestController {
                 User::findOrFail($token->id);
             }catch(ModelNotFoundException $e){
                 $resp = $resp->withStatus(401);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
                 return $resp;
             }
@@ -51,6 +53,7 @@ class GestController {
                 $user = User::findorFail($args['id']);
             } catch (ModelNotFoundException $e) {
                 $resp = $resp->withStatus(404);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /user/'.$args['id']));
                 return $resp;
             }
@@ -58,18 +61,22 @@ class GestController {
             return $resp;
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "L'authentification a expirée"));
             return $resp;
         }catch(SignatureInvalidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
             return $resp;
         }catch(BeforeValidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }catch(\UnexpectedValueException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }
@@ -87,6 +94,7 @@ class GestController {
             }catch(ModelNotFoundException $e){
 
                 $resp = $resp->withStatus(401);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
                 return $resp;
             }
@@ -98,22 +106,27 @@ class GestController {
             $photo->id_ville = filter_var($parsedBody['id_ville'], FILTER_SANITIZE_SPECIAL_CHARS);
             $photo->save();
             $resp = $resp->withStatus(201);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('photo' => array('url' => $photo->url, 'longitude' => $photo->longitude, 'latitude' => $photo->latitude, 'id_ville' => $photo->id_ville)));
             return $resp;
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "L'authentification a expirée"));
             return $resp;
         }catch(SignatureInvalidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
             return $resp;
         }catch(BeforeValidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }catch(UnexpectedValueException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }
@@ -129,6 +142,7 @@ class GestController {
                 User::findOrFail($token->id);
             }catch(ModelNotFoundException $e){
                 $resp = $resp->withStatus(401);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
                 return $resp;
             }
@@ -141,22 +155,27 @@ class GestController {
             $serie->latitude = filter_var($parsedBody['latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
             $serie->save();
             $resp = $resp->withStatus(201);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('serie' => array('id' => $serie->id, 'ville' => $serie->ville, 'longitude' => $serie->longitude, 'latitude' => $serie->latitude)));
             return $resp;
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
             return $resp;
         }catch(SignatureInvalidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
             return $resp;
         }catch(BeforeValidException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }catch(\UnexpectedValueException $e) {
             $resp = $resp->withStatus(401);
+            $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
             $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
             return $resp;
         }
@@ -169,6 +188,7 @@ class GestController {
                 $user = User::where('identifiant' , '=', $parsedBody['identifiant'])->firstOrFail();
             } catch (ModelNotFoundException $e) {
                 $resp = $resp->withStatus(404);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Utilisateur ou mot de passe incorrect'));
                 return $resp;
             }
@@ -183,10 +203,12 @@ class GestController {
                     'mail'=>(string) $user->mail],
                     $secret,'HS512');
                 $resp = $resp->withStatus(200);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('identifiant' => $user->identifiant, 'mail' => $user->mail, 'id' => $user->id, 'token' => $token));
                 return $resp;
             }else{
                 $resp = $resp->withStatus(404);
+                $resp = $resp->withHeader('Access-Control-Allow-Origin', '*');
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Utilisateur ou mot de passe incorrect'));
                 return $resp;
             }

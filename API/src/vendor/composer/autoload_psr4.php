@@ -22,5 +22,6 @@ return array(
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Common/Inflector'),
+    'CorsSlim\\' => array($vendorDir . '/palanik/corsslim'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
 );

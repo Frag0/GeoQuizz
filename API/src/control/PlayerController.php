@@ -49,13 +49,13 @@ class PlayerController {
         $photos = Serie::findorFail($args['id'])->photos;
         $t = count($photos);
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
-        $tabphoto = [
+        $tabphotos = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "photos"=>$photos
         ];
         $resp = $resp->withStatus(201);
-        $resp = $resp->withJson($tabphoto);        
+        $resp = $resp->withJson($tabphotos);        
         return $resp;
     }
 
