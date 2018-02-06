@@ -34,8 +34,14 @@ class PlayerController {
     }
 
     public function getSerieId(Request $req, Response $resp, $args){
-        
-        $serie = Serie::find($args['id']);
+        try {
+            $serie = Serie::findorFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /serie/'.$args['id']));
+            return $resp;
+        }
+        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabserie=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
@@ -80,8 +86,14 @@ class PlayerController {
     }
 
     public function getPartieId(Request $req, Response $resp, $args){
-        
-        $partie = Partie::find($args['id']);
+        try {
+            $partie = Partie::findorFail($args['id']);
+        } catch (ModelNotFoundException $e) {
+            $resp = $resp->withStatus(404);
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /partie/'.$args['id']));
+            return $resp;
+        }
+        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabpartie=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
