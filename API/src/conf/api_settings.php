@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'settings' => [ 'displayErrorDetails' => true ]
+	'settings' => [ 'displayErrorDetails' => true]
 ];
