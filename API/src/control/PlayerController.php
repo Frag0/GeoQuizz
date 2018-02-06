@@ -41,14 +41,20 @@ class PlayerController {
     }
 
     public function getPhotos(Request $req, Response $resp, $args){
-        
-        $photos = Photo::where('id_ville', '=', $args['id'])->get();
-        $resp = $resp->withJson($photos);
+        $photos = Photo::where('id_ville', '=', $args['id'])->get();    
+        $t = count($photos);
+        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
+        $tabphoto = [
+            "type"=>'collection',
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "photos"=>$photos
+        ];
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withJson($tabphoto);        
         return $resp;
     }
 
     public function getParties(Request $req, Response $resp, $args){
-        
         $parties = Partie::all();
         $resp = $resp->withJson($parties);
         return $resp;
