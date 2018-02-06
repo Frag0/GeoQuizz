@@ -19,6 +19,7 @@ class GestController {
 
     public function addUser(Request $req, Response $resp, $args){
         $parsedBody = $req->getParsedBody();
+
         $user = new User;
         $uuid4 = Uuid::uuid4();
         $user->id = $uuid4;
@@ -30,6 +31,7 @@ class GestController {
         $resp = $resp->withHeader('Location', "/user/".$user->id);
         $resp = $resp->withJson(array('user' => array('id' => $user->id, 'nom' => $user->identifiant, 'mail' => $user->mail)));
         return $resp;
+
     }
 
     public function user(Request $req, Response $resp, $args){
@@ -79,9 +81,11 @@ class GestController {
             $h = $req->getHeader('Authorization')[0];
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
+
             try{
                 User::findOrFail($token->id);
             }catch(ModelNotFoundException $e){
+
                 $resp = $resp->withStatus(401);
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
                 return $resp;
