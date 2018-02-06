@@ -10,11 +10,15 @@ export default {
 	data () {
 		return {
 			long : 48.8534100,
-			lat : 2.3488000
+			lat : 2.3488000,
+			villes : []
 		}
 	},
 	mounted(){
-		this.setMap();
+		window.axios.get('series').then(response => {
+      	this.ville = response.data
+      	this.setMap();
+		})		
 	},
 	methods : {
 		setMap(){
