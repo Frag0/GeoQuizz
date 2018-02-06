@@ -126,7 +126,7 @@ class GestController {
             $tokenstring = sscanf($h, "Bearer %s")[0];
             $token = JWT::decode($tokenstring, $secret, ['HS512']);
             try{
-                User::firstOrFail($token->id);
+                User::findOrFail($token->id);
             }catch(ModelNotFoundException $e){
                 $resp = $resp->withStatus(401);
                 $resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
@@ -140,6 +140,8 @@ class GestController {
             $serie->longitude = filter_var($parsedBody['longitude'], FILTER_SANITIZE_SPECIAL_CHARS);
             $serie->latitude = filter_var($parsedBody['latitude'], FILTER_SANITIZE_SPECIAL_CHARS);
             $serie->save();
+            $resp = $resp->withStatus(201);
+            $resp = $resp->withJson(array('serie' => array('id' => $serie->id, 'ville' => $serie->ville, 'longitude' => $serie->longitude, 'latitude' => $serie->latitude)));
             return $resp;
         }catch(ExpiredException $e) {
             $resp = $resp->withStatus(401);
@@ -176,7 +178,7 @@ class GestController {
                 $token =JWT::encode( ['iss'=>'http://gest.geoquizz.local:10111/user/'.$user->id.'/signin',
                     'aud'=>'http://gest.geoquizz.local:10111/',
                     'iat'=>time(),
-                    'exp'=>time()+3600,
+                    'exp'=>time()+43200,
                     'id'=>(string) $user->id,
                     'mail'=>(string) $user->mail],
                     $secret,'HS512');
