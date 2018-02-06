@@ -1,23 +1,30 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'App'
+  name: 'app',
+  components: {},
+  mounted(){
+    if (!this.$store.state.member) {
+      this.$router.push({path: '/connexion'});
+    } else{
+      window.axios.defaults.params.token = this.$store.state.token;
+    }
+    window.bus.$on('logout', () => {
+      window.axios.delete('members/signout');
+      this.$store.commit('setMember', false);
+      this.$store.commit('setToken', false);
+      this.$router.push({path: '/connexion'});
+    })
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
 </style>
