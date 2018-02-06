@@ -9,6 +9,11 @@ use \geo\model\Photo;
 use \geo\model\Partie;
 use \geo\model\User;
 use \geo\model\Serie;
+use Ramsey\Uuid\Uuid;
+use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException ;
+use Firebase\JWT\BeforeValidException;
 
 class PlayerController {
 
@@ -25,6 +30,18 @@ class PlayerController {
         $resp = $resp->withStatus(201);
         $resp = $resp->withJson($tabseries);
         
+        return $resp;
+    }
+
+    public function getSerieId(Request $req, Response $resp, $args){
+        
+        $serie = Serie::find($args['id']);
+        $tabserie=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "serie"=>$serie,
+        ];
+        $resp = $resp->withJson($tabserie);
         return $resp;
     }
 
@@ -46,39 +63,57 @@ class PlayerController {
         $parties = Partie::all();
         $t = count($parties);
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
-        $tabparties = [
+        $tabpartie = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
-            "series"=>$parties
+            "parties"=>$parties
         ];
         $resp = $resp->withStatus(201);
-        $resp = $resp->withJson($parties);
+        $resp = $resp->withJson($tabpartie);
+        return $resp;
+    }
+
+    public function getPartieId(Request $req, Response $resp, $args){
+        
+        $partie = Partie::find($args['id']);
+        $tabpartie=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "partie"=>$partie
+        ];
+        $resp = $resp->withJson($tabpartie);
         return $resp;
     }
 
     public function postPartie(Request $req, Response $resp, $args) {
-
-        $parsedBody = $req->getParsedBody();
-        $partie = new Partie;
-        $partie->id = filter_var($parsedBody['id']);
-        $partie->token = filter_var($parsedBody['token'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->save();
+            $parsedBody = $req->getParsedBody();
+            $partie = new Partie;
+            $uuid4 = Uuid::uuid4();
+            $partie->id = $uuid4;
+            $secret = 'geoquizz';
+            $token =JWT::encode( ['iss'=>'http://api.geoquizz.local:10101/parties/'.$partie->id,
+                'aud'=>'http://api.geoquizz.local:10101/',
+                'iat'=>time(),
+                'exp'=>time()+3600,
+                'id'=>(string) $partie->id],
+                $secret,'HS512');
+            $resp = $resp->withStatus(200);
+            
+            $partie->token = $token;
+            $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
+            $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
+            $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
+            $partie->save();
+            return $resp;
     }
 
     public function putPartie(Request $req, Response $resp, $args) {
 
         $parsedBody = $req->getParsedBody();
         $partie = Partie::find($parsedBody['id']);
-        $partie->id = filter_var($parsedBody['id']);
-        $partie->token = filter_var($parsedBody['token'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->save();
+        return $resp;
     }
 }
