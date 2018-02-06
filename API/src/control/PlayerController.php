@@ -29,14 +29,12 @@ class PlayerController {
     }
 
     public function getPhotos(Request $req, Response $resp, $args){
-        
         $photos = Photo::where('id_ville', '=', $args['id'])->get();
         $resp = $resp->withJson($photos);
         return $resp;
     }
 
     public function getParties(Request $req, Response $resp, $args){
-        
         $parties = Partie::all();
         $resp = $resp->withJson($parties);
         return $resp;
