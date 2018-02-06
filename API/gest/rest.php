@@ -22,14 +22,28 @@ $configuration = array_merge($settings, $errors, $dependencies);
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
 
+$app->add(function($request, $response, callable $next){
+    $response = $next($request, $response);
+    $response = $response->withHeader('Content-type', 'application/json; charset=utf-8');
+    $response = $response->withHeader("Access-Control-Allow-Headers", "authorization, Content-Type");
+    $response = $response->withHeader('Access-Control-Allow-Origin', $request->getHeader('Origin')[0]);
+    $response = $response->withHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
+    return $response;
+});
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
 $app->post('/adduser[/]','\geo\control\GestController:addUser');
 
 $app->post('/addphoto[/]','\geo\control\GestController:addPhoto');
 
 $app->post('/addserie[/]','\geo\control\GestController:addSerie');
 
-$app->get('/user/{id}[/]','\geo\control\GestController:user');
+$app->post('/login[/]','\geo\control\GestController:login');
 
-$app->post('/user/signin[/]','\geo\control\GestController:login');
+$app->get('/user/{id}[/]','\geo\control\GestController:user');
 
 $app->run();
