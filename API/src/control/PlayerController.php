@@ -55,7 +55,7 @@ class PlayerController {
             "photos"=>$photos
         ];
         $resp = $resp->withStatus(201);
-        $resp = $resp->withJson($tabphoto);        
+        $resp = $resp->withJson($tabphotos);        
         return $resp;
     }
 
