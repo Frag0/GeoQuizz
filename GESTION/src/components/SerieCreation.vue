@@ -23,7 +23,7 @@ export default {
 	},
 	methods: {
 		creerSerie(){
-			window.axios.post('addserie', {
+			window.axios.post('series', {
 	        ville: this.ville,
 	      }).then(response => {
 	        //this.$router.push({path: '/series'});  

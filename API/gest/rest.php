@@ -36,14 +36,16 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
-$app->post('/adduser[/]','\geo\control\GestController:addUser');
+$app->get('/series[/]','\geo\control\GestController:getSeries');
 
-$app->post('/addphoto[/]','\geo\control\GestController:addPhoto');
+$app->post('/series/{id}/photos[/]','\geo\control\GestController:addPhoto');
 
-$app->post('/addserie[/]','\geo\control\GestController:addSerie');
+$app->post('/series[/]','\geo\control\GestController:addSerie');
 
-$app->post('/login[/]','\geo\control\GestController:login');
+$app->post('/users[/]','\geo\control\GestController:addUser');
 
-$app->get('/user/{id}[/]','\geo\control\GestController:user');
+$app->post('/users/signin[/]','\geo\control\GestController:login');
+
+$app->get('/users/{id}[/]','\geo\control\GestController:user');
 
 $app->run();
