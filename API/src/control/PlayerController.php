@@ -36,7 +36,12 @@ class PlayerController {
     public function getSerieId(Request $req, Response $resp, $args){
         
         $serie = Serie::find($args['id']);
-        $resp = $resp->withJson($serie);
+        $tabserie=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "serie"=>$serie,
+        ];
+        $resp = $resp->withJson($tabserie);
         return $resp;
     }
 
@@ -71,7 +76,12 @@ class PlayerController {
     public function getPartieId(Request $req, Response $resp, $args){
         
         $partie = Partie::find($args['id']);
-        $resp = $resp->withJson($partie);
+        $tabpartie=[
+            "type"=>"ressource",
+            "meta"=>[$date=date('d/m/y')],
+            "partie"=>$partie
+        ];
+        $resp = $resp->withJson($tabpartie);
         return $resp;
     }
 
