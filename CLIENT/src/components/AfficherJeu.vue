@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<div id="mapid" style="width: 60%; height: 400px;"></div>
+		<img src="../assets/adt.jpg" class="w-50" v-if="!ok">
+		<div id="mapid" class="float-right" style="height:500px; width:500px;"></div>
+		<button @click="setMap" v-if="ok">Clique</button>
 	</div>
 </template>
 
@@ -9,25 +11,43 @@ export default {
 	name:'AfficherJeu',
 	data () {
 		return {
-			long : 48.8534100,
-			lat : 2.3488000
+			long : 2.3488000,
+			lat : 48.8534100,
+			series : [],
+			ok : true
 		}
 	},
 	mounted(){
-		this.setMap();
+		window.axios.get('series').then(response => {
+			this.series = response.data
+		})
 	},
 	methods : {
 		setMap(){
-			var mymap = L.map('mapid').setView([this.long, this.lat], 11);
+
+			this.ok = false;
+			var mymap = L.map('mapid').setView([this.lat,this.long], 11);
 			var $message = "Bienvenue sur le premier jeu au monde intéractif avec des monuments";
 			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 				maxZoom: 25,
-				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 				id: 'mapbox.streets'
 			}).addTo(mymap);
 			L.marker([48.8534100,2.3488000], {draggable : true}).addTo(mymap).bindPopup($message).openPopup();
+
+			var lat = this.lat;
+			var lng = this.long;
+
+			function onMapClick(e) {
+				L.marker().setLatLng(e.latlng).addTo(mymap).bindPopup("Tu as cliqué la").openPopup();
+
+				var distance = L.latLng([lat,lng]).distanceTo(e.latlng);
+
+				if(distance < 3000){
+					alert("Bien joué poto");
+				}
+			}
+
+			mymap.on('click', onMapClick);
 		}
 	}
 }
@@ -35,7 +55,6 @@ export default {
 
 <style scoped>
 #mapid{
-  margin-left : 20%;
 }
 h1{
   text-align: center;
