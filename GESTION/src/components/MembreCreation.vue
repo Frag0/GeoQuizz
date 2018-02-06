@@ -36,7 +36,7 @@ export default {
 	        alert('Les mots de passe ne correspondent pas')
 	      }
 	      else {
-	        window.axios.post('users', {
+	        window.axios.post('adduser', {
 	          identifiant: this.identifiant,
 	          password: this.password,
 	        }).then(response => {

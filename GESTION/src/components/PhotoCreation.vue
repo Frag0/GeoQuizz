@@ -2,8 +2,8 @@
 	<div class="card" style="width: 18rem;">
 		<form @submit="creerSerie">
 			<div class="form-group">
-				<label for="Ville">Ville</label>
-				<input type="text" v-model="ville" class="form-control" id="ville" placeholder="Ville">
+				<label for="Lien">Lien</label>
+				<input type="text" v-model="ville" class="form-control" id="lien" placeholder="Lien">
 			</div>
 
 			<center><button type="submit" class="btn btn-outline-primary">Créer</button></center>
@@ -15,16 +15,16 @@
 <script>
 
 export default {
-	name: 'SerieCreation',
+	name: 'PhotoCreation',
 	data () {
 		return {
-			ville: '',
+			lien: '',
 		}
 	},
 	methods: {
-		creerSerie(){
-			window.axios.post('addserie', {
-	        ville: this.ville,
+		ajouterPhoto(){
+			window.axios.post('addphoto', {
+	        lien: this.lien,
 	      }).then(response => {
 	        //this.$router.push({path: '/series'});  
 	      })
