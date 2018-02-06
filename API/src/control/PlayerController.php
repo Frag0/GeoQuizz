@@ -29,23 +29,16 @@ class PlayerController {
     }
 
     public function getPhotos(Request $req, Response $resp, $args){
-        try {
-            $photos = Photo::where('id_ville', '=', $args['id'])->get();    
-        } catch (ModelNotFoundException $e) {
-            $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /series/'.$args['id']));
-            return $resp;
-        }
-
+        $photos = Photo::where('id_ville', '=', $args['id'])->get();    
         $t = count($photos);
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabphoto = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "photos"=>$photos
-        ]
+        ];
         $resp = $resp->withStatus(201);
-        $resp = $resp->withJson($tabphoto);
+        $resp = $resp->withJson($tabphoto);        
         return $resp;
     }
 
