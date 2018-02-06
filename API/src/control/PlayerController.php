@@ -106,25 +106,24 @@ class PlayerController {
     }
 
     public function postPartie(Request $req, Response $resp, $args) {
-            $parsedBody = $req->getParsedBody();
-            $partie = new Partie;
-            $uuid4 = Uuid::uuid4();
-            $partie->id = $uuid4;
-            $secret = 'geoquizz';
-            $token =JWT::encode( ['iss'=>'http://api.geoquizz.local:10101/parties/'.$partie->id,
-                'aud'=>'http://api.geoquizz.local:10101/',
-                'iat'=>time(),
-                'exp'=>time()+3600,
-                'id'=>(string) $partie->id],
-                $secret,'HS512');
-            $resp = $resp->withStatus(200);
-            
-            $partie->token = $token;
-            $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
-            $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
-            $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
-            $partie->save();
-            return $resp;
+        $parsedBody = $req->getParsedBody();
+        $partie = new Partie;
+        $uuid4 = Uuid::uuid4();
+        $partie->id = $uuid4;
+        $secret = 'geoquizz';
+        $token =JWT::encode( ['iss'=>'http://api.geoquizz.local:10101/parties/'.$partie->id,
+            'aud'=>'http://api.geoquizz.local:10101/',
+            'iat'=>time(),
+            'exp'=>time()+3600,
+            'id'=>(string) $partie->id],
+            $secret,'HS512');
+        $resp = $resp->withStatus(201);
+        $partie->token = $token;
+        $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $partie->save();
+        return $resp;
     }
 
     public function putPartie(Request $req, Response $resp, $args) {
