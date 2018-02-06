@@ -46,7 +46,7 @@ class PlayerController {
     }
 
     public function getPhotos(Request $req, Response $resp, $args){
-        $photos = Photo::where('id_ville', '=', $args['id'])->get();    
+        $photos = Serie::findorFail($args['id'])->photos;
         $t = count($photos);
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabphoto = [

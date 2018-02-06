@@ -11,4 +11,8 @@ class Partie extends \Illuminate\Database\Eloquent\Model
     public $timestamps = false;
     public $incrementing = false;
     public $keyType = "string";
+
+    public function serie() {
+       return $this->belongsTo('geo\model\Serie', 'id_serie');
+	}
 }
