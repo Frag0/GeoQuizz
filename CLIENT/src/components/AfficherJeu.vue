@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div id="mapid" style="width: 60%; height: 400px;"></div>
+		<div id="mapid" style="width: 100%; height: 600px;"></div>
 	</div>
 </template>
 
@@ -35,7 +35,6 @@ export default {
 
 <style scoped>
 #mapid{
-  margin-left : 20%;
 }
 h1{
   text-align: center;
