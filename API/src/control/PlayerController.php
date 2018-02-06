@@ -27,7 +27,7 @@ class PlayerController {
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "series"=>$series
         ];
-        $resp = $resp->withStatus(201);
+        $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabseries);
         
         return $resp;
@@ -47,6 +47,7 @@ class PlayerController {
             "meta"=>[$date=date('d/m/y')],
             "serie"=>$serie,
         ];
+        $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabserie);
         return $resp;
     }
@@ -66,7 +67,7 @@ class PlayerController {
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "photos"=>$photos
         ];
-        $resp = $resp->withStatus(201);
+        $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabphotos);        
         return $resp;
     }
@@ -80,7 +81,7 @@ class PlayerController {
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
             "parties"=>$parties
         ];
-        $resp = $resp->withStatus(201);
+        $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabpartie);
         return $resp;
     }
@@ -99,6 +100,7 @@ class PlayerController {
             "meta"=>[$date=date('d/m/y')],
             "partie"=>$partie
         ];
+        $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabpartie);
         return $resp;
     }
