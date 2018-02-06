@@ -56,7 +56,15 @@ class PlayerController {
 
     public function getParties(Request $req, Response $resp, $args){
         $parties = Partie::all();
-        $resp = $resp->withJson($parties);
+        $t = count($parties);
+        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
+        $tabpartie = [
+            "type"=>'collection',
+            "meta"=>[$date=date('d/m/y'),"count"=>$t],
+            "parties"=>$parties
+        ];
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withJson($tabpartie);
         return $resp;
     }
 
