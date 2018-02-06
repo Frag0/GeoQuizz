@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Connexion from '@/components/Connexion'
 import Menu from '@/components/Menu'
 import MembreCreation from '@/components/MembreCreation'
+import SerieCreation from '@/components/SerieCreation'
 
 Vue.use(Router)
 
@@ -19,6 +20,10 @@ export default new Router({
     {
       path: '/membre-creation',
       component: MembreCreation
+    },
+    {
+      path: '/serie-creation',
+      component: SerieCreation
     }
   ]
 })
