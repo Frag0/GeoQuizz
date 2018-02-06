@@ -30,6 +30,8 @@ $app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
 
 $app->get('/parties[/]','\geo\control\PlayerController:getParties');
 
+$app->get('/parties/{id}[/]','\lbs\control\PlayerController:getPartieId');
+
 $app->post('/postpartie[/]','\geo\control\PlayerController:postPartie');
 
 $app->put('/putpartie[/]','\geo\control\PlayerController:putPartie');
