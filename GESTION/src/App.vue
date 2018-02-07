@@ -1,23 +1,26 @@
 <template>
   <div id="app">
+    <navBar v-if="this.$store.state.member"></navBar>
     <router-view/>
   </div>
 </template>
 
 <script>
 
+import NavBar from './components/NavBar.vue'
+
 export default {
   name: 'app',
-  components: {},
+  components: {
+    NavBar
+  },
   mounted(){
     if (!this.$store.state.member) {
       this.$router.push({path: '/connexion'});
     } else{
-      window.axios.defaults.params.token = this.$store.state.token;
       this.$router.push({path: '/menu'});
     }
     window.bus.$on('logout', () => {
-      window.axios.delete('users/signout');
       this.$store.commit('setMember', false);
       this.$store.commit('setToken', false);
       this.$router.push({path: '/connexion'});
