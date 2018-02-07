@@ -21,10 +21,16 @@ export default {
 		return {
 			ville: '',
 			longitude: null,
-			latitude: null
+			latitude: null,
+			series: [],
+			same: false
 		}
 	},
 	mounted(){
+		window.axios.get('series').then(response => {
+			this.series = response.data.series
+		})
+
 		var mymap = L.map('mapid').setView([48.8589507,2.2770204], 5);
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -49,7 +55,12 @@ export default {
 	},
 	methods: {
 		creerSerie(){
-			if (window.bus.longitude != null && window.bus.latitude != null && this.ville != '') {
+			for (let i = 0; i < this.series.length; i++) {
+				if(this.series[i].ville.toLowerCase() == this.ville.toLowerCase()){
+					this.same = true
+				}
+			}
+			if (window.bus.longitude != null && window.bus.latitude != null && this.ville != '' && !this.same) {
 				window.axios.post('series', {
 		        	ville: this.ville,
 		        	longitude: window.bus.longitude,
@@ -61,7 +72,8 @@ export default {
 	        		this.$router.push({path: '/bienvenue'});  
 	      		})
 			}else{
-				alert("Veuillez placer le marqueur et remplir le champ ville ! ")
+				this.same=false
+				alert("Veuillez placer le marqueur et remplir le champ ville (ou la ville existe déjà! ")
 			}
 			
 		}

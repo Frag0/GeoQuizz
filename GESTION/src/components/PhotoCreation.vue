@@ -37,7 +37,8 @@ export default {
 	},
 	mounted() {
 		window.axios.get('series').then(response => {
-			this.series = response.data.series			
+			this.series = response.data.series
+			console.table(response.data.series)			
 		})
 	},
 	methods: {
