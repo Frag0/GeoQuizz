@@ -33,11 +33,13 @@ export default {
 	},
 	methods:{
 		commencerPartie(){
-			window.axios.post('partie', {
+			window.axios.post('parties', {
 				pseudo : this.pseudo,
 				id_serie : this.ville
 			}).then(response => {
 
+				console.log(response);
+				this.$router.push({path: '/jeu'});
 			})
 		}
 	}
