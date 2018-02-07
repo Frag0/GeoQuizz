@@ -5,6 +5,14 @@
 				<label for="Ville">Ville</label>
 				<input type="text" v-model="ville" class="form-control" id="ville" placeholder="Ville">
 			</div>
+			<div class="form-group">
+				<label for="Longitude">Longitude</label>
+				<input type="text" v-model="longitude" class="form-control" id="longitude" placeholder="Longitude">
+			</div>
+			<div class="form-group">
+				<label for="Latitude">Latitude</label>
+				<input type="text" v-model="latitude" class="form-control" id="latitude" placeholder="Latitude">
+			</div>
 
 			<center><button type="submit" class="btn btn-outline-primary">Créer</button></center>
 
@@ -19,14 +27,18 @@ export default {
 	data () {
 		return {
 			ville: '',
+			longitude: null,
+			latitude: null,
 		}
 	},
 	methods: {
 		creerSerie(){
 			window.axios.post('series', {
-	        ville: this.ville,
-	      }).then(response => {
-	        //this.$router.push({path: '/series'});  
+		        ville: this.ville,
+		        longitude: this.longitude,
+		        latitude: this.latitude
+	      }, {headers:  {'Authorization': 'Bearer ' + this.$store.state.member.token }}).then(response => {
+	        this.$router.push({path: '/bienvenue'});  
 	      })
 		}
 	}

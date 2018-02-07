@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar v-if="this.$store.state.member"></Navbar>
+    <navbar v-if="this.$store.state.member"></navbar>
     <router-view/>
   </div>
 </template>
