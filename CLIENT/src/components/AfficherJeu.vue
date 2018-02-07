@@ -14,19 +14,26 @@ export default {
 			long : 2.3488000,
 			lat : 48.8534100,
 			series : [],
+			photos : [],
 			ok : true
 		}
 	},
 	mounted(){
 		window.axios.get('series').then(response => {
-			this.series = response.data
+			this.series = response.data.series
 		})
+		window.axios.get('series/e8724b30-1c7b-44b3-a144-3602e542add0/photos').then(response => {
+			this.photos = response.data.photos
+		})
+		console.log(this.photos)
 	},
 	methods : {
 		setMap(){
 
+			
+
 			this.ok = false;
-			var mymap = L.map('mapid').setView([this.lat,this.long], 11);
+			var mymap = L.map('mapid').setView([this.series[0].latitude,this.series[0].longitude], 11);
 			var $message = "Bienvenue sur le premier jeu au monde intéractif avec des monuments";
 			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 				maxZoom: 25,
