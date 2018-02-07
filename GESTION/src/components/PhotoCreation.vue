@@ -1,13 +1,22 @@
 <template>
 	<div class="card" style="width: 18rem;">
-		<form @submit="creerSerie">
+		<form @submit="ajouterPhoto">
 			<div class="form-group">
-				<label for="Lien">Lien</label>
-				<input type="text" v-model="ville" class="form-control" id="lien" placeholder="Lien">
+				<label for="url">URL</label>
+				<input type="text" v-model="url" class="form-control" id="url" placeholder="URL">
 			</div>
 			<div class="form-group">
-				<label for="Serie">Lien</label>
-				<input type="text" v-model="ville" class="form-control" id="lien" placeholder="Lien">
+				<select v-model="ville">
+      				<option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
+      			</select>
+			</div>
+			<div class="form-group">
+				<label for="Longitude">Longitude</label>
+				<input type="text" v-model="longitude" class="form-control" id="longitude" placeholder="Longitude">
+			</div>
+			<div class="form-group">
+				<label for="Latitude">Latitude</label>
+				<input type="text" v-model="latitude" class="form-control" id="latitude" placeholder="Latitude">
 			</div>
 
 			<center><button type="submit" class="btn btn-outline-primary">Créer</button></center>
@@ -22,15 +31,28 @@ export default {
 	name: 'PhotoCreation',
 	data () {
 		return {
-			lien: '',
+			url: '',
+			series: [],
+			serie: '',
+			ville: '',
+			longitude: null,
+			latitude: null
 		}
+	},
+	mounted() {
+		window.axios.get('series').then(response => {
+			this.series = response.data.series			
+		})
 	},
 	methods: {
 		ajouterPhoto(){
-			window.axios.post('series/'+this.$route.params.id+'/photos', {
-	        lien: this.lien,
-	      }).then(response => {
-	        //this.$router.push({path: '/series'});  
+			window.axios.post('series/'+this.serie.id+'/photos', {
+	        url: this.url,
+	        longitude: this.longitude,
+	        latitude: this.latitude,
+	        id_ville: this.ville
+	      }, {headers:  {'Authorization': 'Bearer ' + this.$store.state.member.token }}).then(response => {
+	        this.$router.push({path: '/bienvenue'});  
 	      })
 		}
 	}

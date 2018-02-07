@@ -2,6 +2,15 @@
   <div>
     <div class="page-header bg-primary pt-3 pb-3 mb-2">
       <h1 class="display-3">Bienvenue !</h1>
+      <h2>Villes</h2>
+      <form >
+      	<label>Pseudo :</label><input type="text" v-model="pseudo" >
+      	<label>Ville :</label>
+      	<select v-model="ville">
+      		<option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
+      	</select>
+      	<button @click="commencerPartie">Commencer</button>
+      </form>
     </div>
   </div>
   
@@ -9,10 +18,29 @@
 
 <script>
 export default {
-  name:'Accueil',
-  data (){
-    return {}
-  }
+  	name:'Accueil',
+  	data (){
+   		return {
+    		series : [],
+    		pseudo : '',
+    		ville : ''
+   		}
+  	},
+  	created(){
+		window.axios.get('series').then(response => {
+			this.series = response.data.series			
+		})
+	},
+	methods:{
+		commencerPartie(){
+			window.axios.post('partie', {
+				pseudo : this.pseudo,
+				id_serie : this.ville
+			}).then(response => {
+
+			})
+		}
+	}
 }
 </script>
 
