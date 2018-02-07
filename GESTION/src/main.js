@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store.js'
 import axios from 'axios'
+import Vue2Leaflet from 'vue2-leaflet';
 
 Vue.config.productionTip = false
 
@@ -17,6 +18,10 @@ store.subscribe((mutation, state) => {
 });
 
 window.bus = new Vue();
+
+Vue.component('v-map', Vue2Leaflet.Map);
+Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
+Vue.component('v-marker', Vue2Leaflet.Marker);
 
 /* eslint-disable no-new */
 new Vue({
