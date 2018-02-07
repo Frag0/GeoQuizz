@@ -1,8 +1,8 @@
 <template>
-	<div id="app">
-		<navbar></navbar>
-		<router-view/>
-	</div>
+  <div id="app">
+    <navBar v-if="this.$store.state.member"></navBar>
+    <router-view/>
+  </div>
 </template>
 
 <script>
