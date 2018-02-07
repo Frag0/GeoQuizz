@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Connexion from '@/components/Connexion'
-import Menu from '@/components/Menu'
+import Bienvenue from '@/components/Bienvenue'
 import MembreCreation from '@/components/MembreCreation'
 import SerieCreation from '@/components/SerieCreation'
 import PhotoCreation from '@/components/PhotoCreation'
@@ -15,8 +15,8 @@ export default new Router({
       component: Connexion
     },
     {
-      path: '/menu',
-      component: Menu
+      path: '/bienvenue',
+      component: Bienvenue
     },
     {
       path: '/membre-creation',
