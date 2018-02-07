@@ -4,6 +4,7 @@ import Connexion from '@/components/Connexion'
 import Menu from '@/components/Menu'
 import MembreCreation from '@/components/MembreCreation'
 import SerieCreation from '@/components/SerieCreation'
+import PhotoCreation from '@/components/PhotoCreation'
 
 Vue.use(Router)
 

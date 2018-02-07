@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="width: 18rem;">
+	<div class="card " style="width: 18rem;">
 		<form @submit="seConnecter">
 			<div class="form-group">
 				<label for="Identifiant">Identifiant</label>
@@ -27,7 +27,7 @@ export default {
 	},
 	methods: {
 		seConnecter(){
-			window.axios.post('user/signin', {
+			window.axios.post('users/signin', {
 				identifiant: this.identifiant,
 				password: this.password,
 			}).then((response) => {

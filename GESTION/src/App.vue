@@ -14,9 +14,10 @@ export default {
       this.$router.push({path: '/connexion'});
     } else{
       window.axios.defaults.params.token = this.$store.state.token;
+      this.$router.push({path: '/menu'});
     }
     window.bus.$on('logout', () => {
-      window.axios.delete('members/signout');
+      window.axios.delete('users/signout');
       this.$store.commit('setMember', false);
       this.$store.commit('setToken', false);
       this.$router.push({path: '/connexion'});
