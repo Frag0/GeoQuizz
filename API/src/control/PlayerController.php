@@ -21,7 +21,6 @@ class PlayerController {
         
         $series = Serie::all();
         $t = count($series);
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabseries = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
@@ -29,7 +28,6 @@ class PlayerController {
         ];
         $resp = $resp->withStatus(200);
         $resp = $resp->withJson($tabseries);
-        
         return $resp;
     }
 
@@ -41,7 +39,6 @@ class PlayerController {
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /series/'.$args['id']));
             return $resp;
         }
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabserie=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
@@ -61,7 +58,6 @@ class PlayerController {
             return $resp;
         }
         $t = count($photos);
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabphotos = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
@@ -75,7 +71,6 @@ class PlayerController {
     public function getParties(Request $req, Response $resp, $args){
         $parties = Partie::all();
         $t = count($parties);
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabpartie = [
             "type"=>'collection',
             "meta"=>[$date=date('d/m/y'),"count"=>$t],
@@ -94,7 +89,6 @@ class PlayerController {
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /parties/'.$args['id']));
             return $resp;
         }
-        $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
         $tabpartie=[
             "type"=>"ressource",
             "meta"=>[$date=date('d/m/y')],
@@ -117,12 +111,13 @@ class PlayerController {
             'exp'=>time()+3600,
             'id'=>(string) $partie->id],
             $secret,'HS512');
-        $resp = $resp->withStatus(201);
         $partie->token = $token;
         $partie->pseudo = filter_var($parsedBody['pseudo'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
+        $partie->statut = 0;
         $partie->id_serie = filter_var($parsedBody['id_serie'],FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->save();
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withJson(array('id' => $partie->id, 'pseudo' => $partie->pseudo, 'id_serie' => $partie->id_serie, 'token' => $partie->token));
         return $resp;
     }
 
@@ -133,6 +128,8 @@ class PlayerController {
         $partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
         $partie->save();
+        $resp = $resp->withStatus(201);
+        $resp = $resp->withJson(array('id' => $partie->id, 'score' => $partie->score, 'statut' => $partie->statut));
         return $resp;
     }
 }
