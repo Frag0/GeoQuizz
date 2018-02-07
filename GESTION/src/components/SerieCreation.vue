@@ -55,10 +55,20 @@ export default {
 	},
 	methods: {
 		creerSerie(){
+			let message = ""
 			for (let i = 0; i < this.series.length; i++) {
 				if(this.series[i].ville.toLowerCase() == this.ville.toLowerCase()){
 					this.same = true
 				}
+			}
+			if (window.bus.longitude == null) {
+				message += "Veuillez placer le marqueur sur la carte\n"
+			}
+			if (!this.ville != '') {
+				message += "Veuillez remplir le champ ville\n"
+			}
+			if (this.same) {
+				message += "La ville existe déjà"
 			}
 			if (window.bus.longitude != null && window.bus.latitude != null && this.ville != '' && !this.same) {
 				window.axios.post('series', {
@@ -73,7 +83,7 @@ export default {
 	      		})
 			}else{
 				this.same=false
-				alert("Veuillez placer le marqueur et remplir le champ ville (ou la ville existe déjà! ")
+				alert(message)
 			}
 			
 		}
