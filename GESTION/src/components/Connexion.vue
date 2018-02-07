@@ -22,7 +22,7 @@ export default {
 	data () {
 		return {
 			identifiant: '',
-			password: '',
+			password: ''
 		}
 	},
 	methods: {
