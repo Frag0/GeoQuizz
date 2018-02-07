@@ -2,6 +2,7 @@
 	<div class="card" style="width: 18rem;">
 		<button type="button" class="btn btn-success" @click="seConnecter">Ajouter une serie</button>
 		<button type="button" class="btn btn-success" @click="seConnecter">Ajouter une photo</button>
+		<button type="button" class="btn btn-danger" @click="deconnection">Déconnexion</button>
 	</div>
 </template>
 
@@ -16,6 +17,10 @@ export default {
 	methods: {
 		seConnecter(){
 			console.log("coucou")
+		},
+		deconnection(){
+			console.log("coucou");
+			window.bus.$emit("logout");
 		}
 	}
 }

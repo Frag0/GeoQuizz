@@ -22,18 +22,19 @@ export default {
 	data () {
 		return {
 			identifiant: '',
-			password: '',
+			password: ''
 		}
 	},
 	methods: {
 		seConnecter(){
-			window.axios.post('user/signin', {
+			window.axios.post('users/signin', {
 				identifiant: this.identifiant,
 				password: this.password,
 			}).then((response) => {
 				this.$store.commit('setMember', response.data);
 				this.$store.commit('setToken', response.data.token);
-				window.axios.defaults.params.token = response.data.token;
+				//window.axios.defaults.params.token = response.data.token;
+				console.log("coucou");
 				this.$router.push({path: '/menu'});
 			}).catch((error) => {
 				console.log(error)
