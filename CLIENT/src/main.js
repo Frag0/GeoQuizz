@@ -13,19 +13,12 @@ window.axios = axios.create({
 });
 
 
-store.subscribe((mutation, state) => {
-  localStorage.setItem('store', JSON.stringify(state));
-});
-
 window.bus = new Vue();
 
 new Vue({
   el: '#app',
   router,
   store,
-  beforeCreate(){
-    this.$store.commit('initialiseStore');
-  },
   components: { App },
   template: '<App/>'
 })
