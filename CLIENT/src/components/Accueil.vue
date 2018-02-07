@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <div class="page-header bg-primary pt-3 pb-3 mb-2">
-      <h1 class="display-3">Bienvenue !</h1>
-      <h2>Villes</h2>
-      <form >
-      	<label>Pseudo :</label><input type="text" v-model="pseudo" >
-      	<label>Ville :</label>
-      	<select v-model="ville">
-      		<option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
-      	</select>
-      	<button @click="commencerPartie">Commencer</button>
-      </form>
-    </div>
-  </div>
-  
+  <div class="page-header bg-primary pt-3 pb-3 mb-2">
+    <h1 class="display-3">Bienvenue sur GeoQuizz!</h1>
+    <h2>Villes</h2>
+    <form>
+      <label>Pseudo :</label><input type="text" v-model="pseudo" >
+      <label>Ville :</label>
+      <select v-model="ville">
+      <option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
+    </select>
+    <button @click="commencerPartie">Commencer</button>
+  </form>    
+</div>
+
 </template>
 
-<script>
+  <script>
 export default {
   	name:'Accueil',
   	data (){
    		return {
     		series : [],
-    		pseudo : '',
-    		ville : ''
+        	ville : '',
+    		pseudo : ''
    		}
   	},
   	created(){
@@ -38,12 +36,14 @@ export default {
 				id_serie : this.ville
 			}).then(response => {
 
-				console.log(response);
+				this.$store.commit('putPseudo', this.pseudo);
+				this.$store.commit('putVille', this.ville);
 				this.$router.push({path: '/jeu'});
 			})
 		}
 	}
 }
+
 </script>
 
 <style scoped>

@@ -23,6 +23,10 @@ export default {
 		window.axios.get('series').then(response => {
 			this.series = response.data.series			
 		})
+		window.axios.get('series/e8724b30-1c7b-44b3-a144-3602e542add0/photos').then(response => {
+			this.photos = response.data.photos
+		})
+		console.log(this.photos)
 	},
 
 	
