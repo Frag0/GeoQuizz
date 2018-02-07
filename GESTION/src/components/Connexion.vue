@@ -1,5 +1,5 @@
 <template>
-	<div class="card" style="width: 18rem;">
+	<div class="card " style="width: 18rem;">
 		<form @submit="seConnecter">
 			<div class="form-group">
 				<label for="Identifiant">Identifiant</label>

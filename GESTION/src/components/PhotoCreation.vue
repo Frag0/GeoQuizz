@@ -5,6 +5,10 @@
 				<label for="Lien">Lien</label>
 				<input type="text" v-model="ville" class="form-control" id="lien" placeholder="Lien">
 			</div>
+			<div class="form-group">
+				<label for="Serie">Lien</label>
+				<input type="text" v-model="ville" class="form-control" id="lien" placeholder="Lien">
+			</div>
 
 			<center><button type="submit" class="btn btn-outline-primary">Créer</button></center>
 

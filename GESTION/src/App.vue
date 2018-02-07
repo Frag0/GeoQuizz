@@ -13,7 +13,6 @@ export default {
 		if (!this.$store.state.member) {
 			this.$router.push({path: '/connexion'});
 		} else{
-			//window.axios.defaults.params.token = this.$store.state.token;
 			this.$router.push({path: '/menu'});
 		}
 		window.bus.$on('logout', () => {

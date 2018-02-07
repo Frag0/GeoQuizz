@@ -1,8 +1,7 @@
 <template>
 	<div class="card" style="width: 18rem;">
-		<button type="button" class="btn btn-success" @click="seConnecter">Ajouter une serie</button>
-		<button type="button" class="btn btn-success" @click="seConnecter">Ajouter une photo</button>
-		<button type="button" class="btn btn-danger" @click="deconnection">Déconnexion</button>
+		<router-link to="/serie-creation" class="black btn btn-primary">Ajouter une série</router-link>
+		<router-link to="/photo-creation" class="black btn btn-primary">Ajouter une photo</router-link>
 	</div>
 </template>
 
@@ -18,10 +17,9 @@ export default {
 		seConnecter(){
 			console.log("coucou")
 		},
-		deconnection(){
-			console.log("coucou");
-			window.bus.$emit("logout");
-		}
+		logOut() {
+      		window.bus.$emit('logout');
+    	}
 	}
 }
 </script>

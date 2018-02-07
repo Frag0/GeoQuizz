@@ -32,7 +32,7 @@ $app->add(function($request, $response, callable $next){
     return $response;
 });
 
-$app->options('/{routes:.+}', function ($request, $response, $args) {
+$app->options('/{routes:.+}', function ($request, $response, $args){
     return $response;
 });
 
