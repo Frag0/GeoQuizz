@@ -33,7 +33,7 @@ export default {
 			}).then((response) => {
 				this.$store.commit('setMember', response.data);
 				this.$store.commit('setToken', response.data.token);
-				this.$router.push({path: '/menu'});
+				this.$router.push({path: '/bienvenue'});
 			}).catch((error) => {
 				console.log(error)
 			})
