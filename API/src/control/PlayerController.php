@@ -38,7 +38,7 @@ class PlayerController {
             $serie = Serie::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /serie/'.$args['id']));
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /series/'.$args['id']));
             return $resp;
         }
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
@@ -57,7 +57,7 @@ class PlayerController {
             $photos = Serie::findorFail($args['id'])->photos;
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /serie/'.$args['id']));
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /series/'.$args['id']));
             return $resp;
         }
         $t = count($photos);
@@ -91,7 +91,7 @@ class PlayerController {
             $partie = Partie::findorFail($args['id']);
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
-            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /partie/'.$args['id']));
+            $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /parties/'.$args['id']));
             return $resp;
         }
         $resp = $resp->withHeader('Content-Type', "application/json;charset=utf-8");
