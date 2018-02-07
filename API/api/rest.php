@@ -36,18 +36,18 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
 
-$app->get('/series/{id}[/]','\geo\control\PlayerController:getSerieId');
-
 $app->get('/series[/]','\geo\control\PlayerController:getSeries');
+
+$app->get('/series/{id}[/]','\geo\control\PlayerController:getSerieId');
 
 $app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
 
 $app->get('/parties[/]','\geo\control\PlayerController:getParties');
 
-$app->get('/parties/{id}[/]','\geo\control\PlayerController:getPartieId');
-
 $app->post('/parties[/]','\geo\control\PlayerController:postPartie');
 
 $app->put('/parties[/]','\geo\control\PlayerController:putPartie');
+
+$app->get('/parties/{id}[/]','\geo\control\PlayerController:getPartieId');
 
 $app->run();
