@@ -35,8 +35,10 @@ export default {
 				pseudo : this.pseudo,
 				id_serie : this.ville
 			}).then(response => {
+				window.axios.get('series/'+this.ville).then(response => {
+					this.$store.commit('putSerie', response.data.serie)
+				})
 				this.$store.commit('putPseudo', this.pseudo);
-				this.$store.commit('putVille', this.ville);
 				this.$router.push({path: '/jeu'});
 			})
 		}

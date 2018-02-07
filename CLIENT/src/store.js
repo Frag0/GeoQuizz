@@ -6,22 +6,31 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state : {
 		pseudo : '',
-		ville : ''
+		serie : []
 	},
 	mutations: {
     	putPseudo (state, p) {
       		state.pseudo = p
     	},
-    	putVille (state, v) {
-    		state.ville = v
+    	putSerie (state, s) {
+    		state.serie = s
     	}
     },
     getters: {
     	getPseudo: state => {
     		return state.pseudo
     	},
-    	getVille: state => {
-    		return state.ville
+    	getSerie: state => {
+    		return state.serie
+    	},
+    	getId: state => {
+    		return state.serie.id
+    	},
+    	getLongitude: state => {
+    		return state.serie.longitude
+    	},
+    	getLatitude: state => {
+    		return state.serie.latitude
     	}
     }
 })

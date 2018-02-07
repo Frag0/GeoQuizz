@@ -56,6 +56,8 @@ export default {
 		        	latitude: window.bus.latitude
 	    		}, {headers:  {'Authorization': 'Bearer ' + this.$store.state.member.token }})
 	    		.then(response => {
+	    			window.bus.longitude = null
+	    			window.bus.latitude = null
 	        		this.$router.push({path: '/bienvenue'});  
 	      		})
 			}else{
@@ -68,7 +70,6 @@ export default {
 </script>
 
 <style scoped>
-@import "https://unpkg.com/leaflet@1.3.1/dist/leaflet.css";
 .card {
 	top: 15vh;
 	padding: 10px;
