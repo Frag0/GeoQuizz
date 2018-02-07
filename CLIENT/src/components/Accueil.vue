@@ -29,7 +29,6 @@ export default {
       pseudo : '',
       level : '',
       serie : '',
-      etat : ''
     }
   },
   created(){
@@ -39,7 +38,10 @@ export default {
   },
   methods : {
     demarrerPartie(){
-      console.log(this.pseudo)
+      window.axios.post('partie',{
+        pseudo : this.pseudo,
+
+      })
     }
   }
 }
