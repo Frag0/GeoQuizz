@@ -20,8 +20,8 @@ export default {
   	data (){
    		return {
     		series : [],
-        ville : '',
-    		pseudo : '',
+        	ville : '',
+    		pseudo : ''
    		}
   	},
   	created(){
@@ -35,8 +35,9 @@ export default {
 				pseudo : this.pseudo,
 				id_serie : this.ville
 			}).then(response => {
-        this.$store.commit('setPseudo',this.pseudo)
-        //this.$router.push({path: '/jeu'});
+				this.$store.commit('putPseudo', this.pseudo);
+				this.$store.commit('putVille', this.ville);
+				this.$router.push({path: '/jeu'});
 			})
 		}
 	}
