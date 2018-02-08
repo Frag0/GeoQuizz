@@ -84,12 +84,9 @@ export default {
 		timer(){
 			if(!this.marker){
 				this.count ++;
-				console.log("Count :"+this.count);
 			}
 			else{
 				this.temps = this.count
-				console.log(this.temps)
-				console.log("ok ca s'arrete");
 			}
 		},
 		suivant(){
@@ -107,22 +104,22 @@ export default {
 			}
 		},
 		envoyer(){
-			window.axios.put('parties',{
+				window.axios.put('parties',{
 				score : this.score,
-				statut : 1
+				statut : 1,
 			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
-				
+				this.$router.push({path: '/scores'});
 			})
 		}
 	}
 }
 
-		</script>
+</script>
 
-		<style scoped>
-		#mapid{
-		}
-		h1{
-			text-align: center;
-		}
-		</style>
+<style scoped>
+#mapid{
+}
+h1{
+	text-align: center;
+}
+</style>
