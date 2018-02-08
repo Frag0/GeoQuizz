@@ -1,10 +1,17 @@
 <template>
-	<div class="w-75">
-		<img v-bind:src="url" class="w-50" v-if="!ok">
-		<div id="mapid" class="float-right" style="height:500px; width:500px;"></div>
-		<button @click="setMap" v-if="ok">Clique</button>
-		<div v-model="score" class="">{{score}}</div>
-		<button @click="suivant">suivant</button>
+	<div class="mt-5">
+		<center><button class="btn btn-outline-success btn-lg btn-block w-75" @click="setMap" v-if="ok">Démarrer la partie</button></center>
+		<div class="card card-border float-left" v-if="!ok" style="height: 75vh; width: 40vw">
+			<img v-bind:src="url" style="max-witdh: 100%">
+		</div>
+		<div class="card p-5 float-left" v-if="!ok" style="height: 30vh; width: 20vw">
+			<h1>Score : </h1>
+			<h1 v-model="score">{{score}}</h1>
+			<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok">Suivant</button>
+		</div>
+		<div class="card card-border" style="height: 75vh; width: 40vw">
+			<div id="mapid" class="float-right" style="height:100%; width:100%;"></div>
+		</div>
 	</div>
 </template>
 
@@ -114,5 +121,8 @@ export default {
 }
 h1{
 	text-align: center;
+}
+.card-border{
+	border:none;
 }
 </style>
