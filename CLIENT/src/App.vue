@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted(){
+  	console.log(this.$store.getters.getToken)
+    if (!this.$store.getters.getToken){
+      this.$router.push({path: '/'})
+    }
+  }
 }
 </script>
 

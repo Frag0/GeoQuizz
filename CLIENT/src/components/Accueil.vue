@@ -23,6 +23,9 @@ export default {
     		pseudo : ''
    		}
   	},
+    mounted(){
+      this.$store.commit('putToken', false)
+    },
   	created(){
 		window.axios.get('series').then(response => {
 			this.series = response.data.series
@@ -30,18 +33,21 @@ export default {
 	},
 	methods:{
 		commencerPartie(){
-			window.axios.post('parties', {
-				pseudo : this.pseudo,
-				id_serie : this.ville
-			}).then(response => {
-
-				window.axios.get('series/'+this.ville).then(response => {
-					this.$store.commit('putSerie', response.data.serie)
-				})
-				this.$store.commit('putPseudo', this.pseudo);
-				this.$store.commit('putToken', response.data.token)
-				this.$router.push({path: '/jeu'});
-			})
+      if(this.ville === "" || this.pseudo === ""){
+        alert("Veuillez remplir les champs")
+      }else{
+  			window.axios.post('parties', {
+  				pseudo : this.pseudo,
+  				id_serie : this.ville
+  			}).then(response => {
+  				window.axios.get('series/'+this.ville).then(response => {
+  					this.$store.commit('putSerie', response.data.serie)
+  				})
+  				this.$store.commit('putPseudo', this.pseudo);
+  				this.$store.commit('putToken', response.data.token)
+  				this.$router.push({path: '/jeu'});
+  			})
+      }
 		}
 	}
 }
