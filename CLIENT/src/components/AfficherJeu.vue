@@ -27,7 +27,7 @@ export default {
 	},
 	methods : {
 		setMap(){
-			this.url = this.photos[0].url
+			this.url = this.photos[this.i].url
 			this.ok = false;
 			var lat = this.$store.getters.getLatitude;
 			var lng = this.$store.getters.getLongitude;
@@ -45,6 +45,7 @@ export default {
 			L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
 			var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
 			//calcul de distance
+
 			if(distance < 300){
 				this.score = this.score + 10
 				if(confirm("bieng +10 points, on continue ?")){
