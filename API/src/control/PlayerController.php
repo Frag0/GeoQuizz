@@ -100,7 +100,7 @@ class PlayerController {
 	}
 
 	public function getParties(Request $req, Response $resp, $args){
-		$parties = Partie::orderBy('score', 'DESC')->get();
+	    $parties = Partie::where('id_serie', '=', $args['id'])->get();
 		$t = count($parties);
 		$tabpartie = [
 			"type"=>'collection',

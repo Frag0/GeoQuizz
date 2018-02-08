@@ -19,7 +19,7 @@ export default new Router({
       component: AfficherJeu
     },
     {
-      path: '/scores',
+      path: '/scores/:id',
       name: 'AfficherScores',
       component: AfficherScores
     }
