@@ -1,14 +1,16 @@
 <template>
-  <div class="page-header bg-primary pt-3 pb-3 mb-2">
-    <h1 class="display-3">Bienvenue sur GeoQuizz!</h1>
+  <div class="jumbotron">
+    <h1 class="display-4">Bienvenue sur GeoQuizz!</h1>
+    <hr class="my-4">
+    <p>Bienvenue sur le meilleur jeu de positionnement géographique</p>
     <form>
       <label>Pseudo :</label><input type="text" v-model="pseudo" >
       <label>Ville :</label>
-      <select v-model="ville">
+      <select v-model="ville" class="custom-select w-25">
       <option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
       </select>
-    <button @click="commencerPartie">Commencer</button>
-  </form>    
+    <button class="btn btn-outline-success" @click="commencerPartie">Commencer</button>
+  </form> 
 </div>
 
 </template>

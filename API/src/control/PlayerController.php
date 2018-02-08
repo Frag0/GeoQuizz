@@ -19,7 +19,7 @@ class PlayerController {
 
 	public function getSeries(Request $req, Response $resp, $args){
 
-		$series = Serie::all();
+		$series = Serie::orderBy('ville', 'ASC')->get();
 		$t = count($series);
 		$tabseries = [
 			"type"=>'collection',
@@ -100,7 +100,7 @@ class PlayerController {
 	}
 
 	public function getParties(Request $req, Response $resp, $args){
-		$parties = Partie::all();
+		$parties = Partie::orderBy('score', 'DESC')->get();
 		$t = count($parties);
 		$tabpartie = [
 			"type"=>'collection',
