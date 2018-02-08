@@ -12,6 +12,7 @@
 		<div class="card card-border" style="height: 75vh; width: 40vw">
 			<div id="mapid" class="float-right" style="height:100%; width:100%;"></div>
 		</div>
+		<center><button class="btn btn-outline-success btn-lg btn-block w-75" v-if="this.i === this.photos.length-1" @click="envoyer">Partie finie</button></center>
 	</div>
 </template>
 
@@ -53,9 +54,10 @@ export default {
 			});
 		},
 		onMapClick(e){
-			this.marker = L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
-			this.marker2 = L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
-			var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
+			if(!this.marker){
+				this.marker = L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
+				this.marker2 = L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
+				var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
 			//calcul de distance
 			if(this.count < 20){
 				if(distance < 400){
@@ -79,6 +81,7 @@ export default {
 			}
 			else{
 				console.log(" pas de point")
+				}
 			}
 		},
 		setInter(){
@@ -88,18 +91,14 @@ export default {
 		timer(){
 			if(!this.marker){
 				this.count ++;
-				console.log("Count :"+this.count);
 			}
 			else{
 				this.temps = this.count
-				console.log(this.temps)
-				console.log("ok ca s'arrete");
 			}
 		},
 		suivant(){
 			if(this.i === this.photos.length-1){
 				clearInterval(this.inter)
-				console.log('cest fini')
 			}
 			else{
 				this.i++;
@@ -110,6 +109,14 @@ export default {
 				this.marker2=null
 				this.count=null
 			}
+		},
+		envoyer(){
+				window.axios.put('parties',{
+				score : this.score,
+				statut : 1,
+			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
+				this.$router.push({path: '/scores'});
+			})
 		}
 	}
 }

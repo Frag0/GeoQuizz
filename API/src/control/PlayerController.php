@@ -153,7 +153,6 @@ class PlayerController {
 	}
 
 	public function putPartie(Request $req, Response $resp, $args) {
-
 		try {
 			$secret = "geoquizz";
 			$h = $req->getHeader('Authorization')[0];
@@ -168,7 +167,6 @@ class PlayerController {
 			}
 
 			$parsedBody = $req->getParsedBody();
-			$partie = Partie::find($parsedBody['id']);
 			$partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
 			$partie->save();
