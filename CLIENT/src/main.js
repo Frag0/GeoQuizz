@@ -12,7 +12,6 @@ window.axios = axios.create({
   baseURL: 'http://api.geoquizz.local:10101',
 });
 
-
 window.bus = new Vue();
 
 new Vue({

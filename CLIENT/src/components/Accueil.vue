@@ -7,7 +7,7 @@
       <label>Ville :</label>
       <select v-model="ville">
       <option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
-    </select>
+      </select>
     <button @click="commencerPartie">Commencer</button>
   </form>    
 </div>
@@ -26,7 +26,7 @@ export default {
   	},
   	created(){
 		window.axios.get('series').then(response => {
-			this.series = response.data.series			
+			this.series = response.data.series
 		})
 	},
 	methods:{
