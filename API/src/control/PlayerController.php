@@ -51,7 +51,7 @@ class PlayerController {
 
     public function getPhotos(Request $req, Response $resp, $args){
         try {
-            $photos = Serie::findorFail($args['id'])->photos;
+            $photos = Photo::where('id_ville', $args['id'])->orderByRaw('RAND()')->take(10)->get();
         } catch (ModelNotFoundException $e) {
             $resp = $resp->withStatus(404);
             $resp = $resp->withJson(array('type' => 'error', 'error' => 404, 'message' => 'Ressource non disponible : /series/'.$args['id']));

@@ -1,8 +1,9 @@
 <template>
-	<div>
+	<div class="w-75">
 		<img v-bind:src="url" class="w-50" v-if="!ok">
 		<div id="mapid" class="float-right" style="height:500px; width:500px;"></div>
 		<button @click="setMap" v-if="ok">Clique</button>
+		<div v-model="score">{{score}}</div>
 	</div>
 </template>
 
@@ -11,53 +12,77 @@ export default {
 	name:'AfficherJeu',
 	data () {
 		return {
-			long : 2.3488000,
-			lat : 48.8534100,
 			photos : [],
 			ok : true,
-			url : 'https://www.novap.fr/media/catalog/product/cache/1/image/650x650/9df78eab33525d08d6e5fb8d27136e95/p/n/4160306-330x200-en-reparation-pas-mettre-marche.jpg'
+			mymap: 0,
+			score : 0,
+			url : '',
+			i : 0
 		}
 	},
-
+	mounted(){
+		window.axios.get('series/'+this.$store.getters.getId+'/photos').then(response => {
+			this.photos = response.data.photos;
+		});	
+	},
 	methods : {
 		setMap(){
-			window.axios.get('series/'+this.$store.getters.getId+'/photos').then(response => {
-				this.photos = response.data.photos;
-				this.url= this.photos[0].url;
-				this.ok = false;
+			this.url = this.photos[0].url
+			this.ok = false;
+			var lat = this.$store.getters.getLatitude;
+			var lng = this.$store.getters.getLongitude;
 
-				var mymap = L.map('mapid').setView([this.$store.getters.getLongitude,this.$store.getters.getLatitude], 11);
-				var $message = "Bienvenue sur le premier jeu au monde intéractif avec des monuments";
-				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-					maxZoom: 25,
-					id: 'mapbox.streets'
-				}).addTo(mymap);
-				L.marker([this.$store.getters.getLongitude,this.$store.getters.getLatitude], {draggable : true}).addTo(mymap).bindPopup($message).openPopup();
+			this.mymap = L.map('mapid').setView([lat,lng], 13);
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+				maxZoom: 25,
+				id: 'mapbox.streets'
+			}).addTo(this.mymap);
 
-				var lat = this.lat;
-				var lng = this.long;
-
-				function onMapClick(e) {
-					L.marker().setLatLng(e.latlng).addTo(mymap).bindPopup("Tu as cliqué la").openPopup();
-
-					var distance = L.latLng([lat,lng]).distanceTo(e.latlng);
-
-					if(distance < 3000){
-						alert("Bien joué poto");
-					}
+			this.mymap.on('click', this.onMapClick);
+		},
+		onMapClick(e){
+			L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
+			L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
+			var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
+			//calcul de distance
+			if(distance < 300){
+				this.score = this.score + 10
+				if(confirm("bieng +10 points, on continue ?")){
+					this.i++;
+					this.url = this.photos[this.i].url
 				}
-
-				mymap.on('click', onMapClick);
-			});		
+			}
+			else if(distance < 600){
+				this.score = this.score + 5
+				if(confirm("bieng +5 points, on continue ?")){
+					this.i++;
+					this.url = this.photos[this.i].url
+				}
+			}
+			else if(distance < 1000){
+				this.score = this.score + 1
+				if(confirm("bieng +1, on continue ?")){
+					this.i++;
+					this.url = this.photos[this.i].url
+				}
+			}
+			else{
+				if(confirm("Pas de point désolé, on continue ?")){
+					this.i++;
+					this.url = this.photos[this.i].url
+				}
+			}
 		}
 	}
 }
+
+
 </script>
 
 <style scoped>
 #mapid{
 }
 h1{
-  text-align: center;
+	text-align: center;
 }
 </style>
