@@ -25,6 +25,7 @@ $app = new \Slim\App($c);
 $app->add(function($request, $response, callable $next){
     $response = $next($request, $response);
     $response = $response->withHeader('Content-type', 'application/json; charset=utf-8');
+
     $response = $response->withHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
     $response = $response->withHeader('Access-Control-Allow-Origin', $request->getHeader('Origin')[0]);
     $response = $response->withHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');

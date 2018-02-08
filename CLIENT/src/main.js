@@ -10,6 +10,7 @@ Vue.config.productionTip = false
 
 window.axios = axios.create({
   baseURL: 'http://api.geoquizz.local:10101',
+  //headers: {Authorization: 'Bearer'+this.$store.getters.getToken}
 });
 
 window.bus = new Vue();

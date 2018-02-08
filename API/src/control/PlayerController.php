@@ -154,13 +154,43 @@ class PlayerController {
 
 	public function putPartie(Request $req, Response $resp, $args) {
 
-		$parsedBody = $req->getParsedBody();
-		$partie = Partie::find($parsedBody['id']);
-		$partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
-		$partie->save();
-		$resp = $resp->withStatus(201);
-		$resp = $resp->withJson(array('id' => $partie->id, 'score' => $partie->score, 'statut' => $partie->statut));
-		return $resp;
+		try {
+			$secret = "geoquizz";
+			$h = $req->getHeader('Authorization')[0];
+			$tokenstring = sscanf($h, "Bearer %s")[0];
+			$token = JWT::decode($tokenstring, $secret, ['HS512']);
+			try{
+				$partie = Partie::findorFail($token->id);
+			}catch(ModelNotFoundException $e){
+				$resp = $resp->withStatus(401);
+				$resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Le token ne correspond pas"));
+				return $resp;
+			}
+
+			$parsedBody = $req->getParsedBody();
+			$partie = Partie::find($parsedBody['id']);
+			$partie->score = filter_var($parsedBody['score'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$partie->statut = filter_var($parsedBody['statut'],FILTER_SANITIZE_SPECIAL_CHARS);
+			$partie->save();
+			$resp = $resp->withStatus(201);
+			$resp = $resp->withJson(array('id' => $partie->id, 'score' => $partie->score, 'statut' => $partie->statut));
+			return $resp;
+		}catch(ExpiredException $e) {
+			$resp = $resp->withStatus(401);
+			$resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "La carte a expirée"));
+			return $resp;
+		}catch(SignatureInvalidException $e) {
+			$resp = $resp->withStatus(401);
+			$resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Mauvaise signature"));
+			return $resp;
+		}catch(BeforeValidException $e) {
+			$resp = $resp->withStatus(401);
+			$resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+			return $resp;
+		}catch(\UnexpectedValueException $e) {
+			$resp = $resp->withStatus(401);
+			$resp = $resp->withJson(array('type' => 'error', 'error' => 401, 'message' => "Les informations ne correspondent pas"));
+			return $resp;
+		}
 	}
 }

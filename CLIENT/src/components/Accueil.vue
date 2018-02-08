@@ -1,7 +1,6 @@
 <template>
   <div class="page-header bg-primary pt-3 pb-3 mb-2">
     <h1 class="display-3">Bienvenue sur GeoQuizz!</h1>
-    <h2>Villes</h2>
     <form>
       <label>Pseudo :</label><input type="text" v-model="pseudo" >
       <label>Ville :</label>
@@ -35,10 +34,12 @@ export default {
 				pseudo : this.pseudo,
 				id_serie : this.ville
 			}).then(response => {
+
 				window.axios.get('series/'+this.ville).then(response => {
 					this.$store.commit('putSerie', response.data.serie)
 				})
 				this.$store.commit('putPseudo', this.pseudo);
+				this.$store.commit('putToken', response.data.token)
 				this.$router.push({path: '/jeu'});
 			})
 		}
