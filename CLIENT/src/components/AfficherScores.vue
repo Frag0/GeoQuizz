@@ -1,8 +1,9 @@
 <template>
   <div class="page-header bg-primary pt-3 pb-3 mb-2">
     <h1>Meilleurs scores</h1>
-    <table v-for="partie in parties">
+    <table v-for="(partie, inc) in parties">
       <tr>
+        <td>{{inc+1}}</td>
         <td>{{partie.pseudo}}</td>
         <td>{{partie.score}}</td>
       </tr>
