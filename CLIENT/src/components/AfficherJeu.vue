@@ -5,6 +5,7 @@
 		<button @click="setMap" v-if="ok">Clique</button>
 		<div v-model="score" class="">{{score}}</div>
 		<button @click="suivant">suivant</button>
+		<button v-if="this.i === this.photos.length-1" @click="envoyer">Partie finie</button>
 	</div>
 </template>
 
@@ -46,9 +47,10 @@ export default {
 			});
 		},
 		onMapClick(e){
-			this.marker = L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
-			this.marker2 = L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
-			var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
+			if(!this.marker){
+				this.marker = L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
+				this.marker2 = L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
+				var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
 			//calcul de distance
 			if(this.count < 20){
 				if(distance < 400){
@@ -72,6 +74,7 @@ export default {
 			}
 			else{
 				console.log(" pas de point")
+				}
 			}
 		},
 		setInter(){
@@ -92,7 +95,6 @@ export default {
 		suivant(){
 			if(this.i === this.photos.length-1){
 				clearInterval(this.inter)
-				console.log('cest fini')
 			}
 			else{
 				this.i++;
@@ -103,16 +105,24 @@ export default {
 				this.marker2=null
 				this.count=null
 			}
+		},
+		envoyer(){
+			window.axios.put('parties',{
+				score : this.score,
+				statut : 1
+			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
+				
+			})
 		}
 	}
 }
 
-</script>
+		</script>
 
-<style scoped>
-#mapid{
-}
-h1{
-	text-align: center;
-}
-</style>
+		<style scoped>
+		#mapid{
+		}
+		h1{
+			text-align: center;
+		}
+		</style>

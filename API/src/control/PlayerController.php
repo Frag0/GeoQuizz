@@ -153,7 +153,6 @@ class PlayerController {
 	}
 
 	public function putPartie(Request $req, Response $resp, $args) {
-
 		try {
 			$secret = "geoquizz";
 			$h = $req->getHeader('Authorization')[0];
