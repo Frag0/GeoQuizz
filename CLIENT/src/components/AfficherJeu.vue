@@ -21,24 +21,27 @@ export default {
 		}
 	},
 	mounted(){
-		window.axios.get('series/'+this.$store.getters.getId+'/photos').then(response => {
-			this.photos = response.data.photos;
-		});	
+		
+			
+		
 	},
 	methods : {
 		setMap(){
-			this.url = this.photos[0].url
-			this.ok = false;
-			var lat = this.$store.getters.getLatitude;
-			var lng = this.$store.getters.getLongitude;
+			window.axios.get('series/'+this.$store.getters.getId+'/photos' , {headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response => {
+				this.photos = response.data.photos;
+				this.url = this.photos[this.i].url;
+				this.ok = false;
+				var lat = this.$store.getters.getLatitude;
+				var lng = this.$store.getters.getLongitude;
 
-			this.mymap = L.map('mapid').setView([lat,lng], 13);
-			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-				maxZoom: 25,
-				id: 'mapbox.streets'
-			}).addTo(this.mymap);
+				this.mymap = L.map('mapid').setView([lat,lng], 13);
+				L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+					maxZoom: 25,
+					id: 'mapbox.streets'
+				}).addTo(this.mymap);
 
-			this.mymap.on('click', this.onMapClick);
+				this.mymap.on('click', this.onMapClick);
+			});	
 		},
 		onMapClick(e){
 			L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
