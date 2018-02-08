@@ -3,7 +3,8 @@
 		<img v-bind:src="url" class="w-50" v-if="!ok">
 		<div id="mapid" class="float-right" style="height:500px; width:500px;"></div>
 		<button @click="setMap" v-if="ok">Clique</button>
-		<div v-model="score">{{score}}</div>
+		<div v-model="score" class="">{{score}}</div>
+		<button @click="suivant">suivant</button>
 	</div>
 </template>
 
@@ -17,7 +18,12 @@ export default {
 			mymap: 0,
 			score : 0,
 			url : '',
-			i : 0
+			i : 0,
+			marker : 0,
+			marker2 : 0,
+			count : 0,
+			inter : 0,
+			temps : 0
 		}
 	},
 	methods : {
@@ -36,45 +42,70 @@ export default {
 				}).addTo(this.mymap);
 
 				this.mymap.on('click', this.onMapClick);
-			});	
+				this.setInter();
+			});
 		},
 		onMapClick(e){
-			L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
-			L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
+			this.marker = L.marker().setLatLng(e.latlng).addTo(this.mymap).bindPopup("Tu as cliqué la").openPopup();
+			this.marker2 = L.marker([this.photos[this.i].latitude,this.photos[this.i].longitude]).addTo(this.mymap).bindPopup("La bonne réponse était ici").openPopup();
 			var distance = L.latLng([this.photos[this.i].latitude,this.photos[this.i].longitude]).distanceTo(e.latlng);
 			//calcul de distance
-
-			if(distance < 300){
-				this.score = this.score + 10
-				if(confirm("bieng +10 points, on continue ?")){
-					this.i++;
-					this.url = this.photos[this.i].url
+			if(this.count < 20){
+				if(distance < 400){
+					if(this.count<5)this.score = this.score + 5*4
+					else if(this.count<10)this.score = this.score + 5*2
+					else if(this.count<20)this.score = this.score + 5
 				}
-			}
-			else if(distance < 600){
-				this.score = this.score + 5
-				if(confirm("bieng +5 points, on continue ?")){
-					this.i++;
-					this.url = this.photos[this.i].url
+				else if(distance < 800){
+					if(this.count<5)this.score = this.score + 3*4
+					else if(this.count<10)this.score = this.score + 3*2
+					else if(this.count<20)this.score = this.score + 3
 				}
-			}
-			else if(distance < 1000){
-				this.score = this.score + 1
-				if(confirm("bieng +1, on continue ?")){
-					this.i++;
-					this.url = this.photos[this.i].url
+				else if(distance < 1200){
+					if(this.count<5)this.score = this.score + 1*4
+					else if(this.count<10)this.score = this.score + 1*2
+					else if(this.count<20)this.score = this.score + 1
+				}
+				else{
+					console.log("T'es naze !")
 				}
 			}
 			else{
-				if(confirm("Pas de point désolé, on continue ?")){
-					this.i++;
-					this.url = this.photos[this.i].url
-				}
+				console.log(" pas de point")
+			}
+		},
+		setInter(){
+			console.log(this.marker)
+			this.inter = setInterval(this.timer,1000);
+		},
+		timer(){
+			if(!this.marker){
+				this.count ++;
+				console.log("Count :"+this.count);
+			}
+			else{
+				this.temps = this.count
+				console.log(this.temps)
+				console.log("ok ca s'arrete");
+			}
+		},
+		suivant(){
+			if(this.i === this.photos.length-1){
+				clearInterval(this.inter)
+				console.log('cest fini')
+			}
+			else{
+				this.i++;
+				this.url = this.photos[this.i].url
+				this.mymap.removeLayer(this.marker)
+				this.mymap.removeLayer(this.marker2)
+				this.marker=null
+				this.marker2=null
+				this.count=null
 			}
 		}
 	}
 }
-
 
 </script>
 
