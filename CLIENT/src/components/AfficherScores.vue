@@ -18,11 +18,8 @@
 					<td>{{partie.score}}</td>
 				</tr>
 			</tbody>
-
-		</table>
-	</form>    
-</div>
-
+		</table>   
+	</div>
 </template>
 
 <script>
