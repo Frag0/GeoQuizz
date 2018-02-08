@@ -21,7 +21,7 @@ export default {
 		}
 	},
 	mounted(){
-		window.axios.get('series/'+this.$store.getters.getId+'/photos').then(response => {
+		window.axios.get('series/'+this.$store.getters.getId+'/photos',{headers:  {'Authorization': 'Bearer ' + this.$store.getters.getToken}}).then(response => {
 			this.photos = response.data.photos;
 		});	
 	},

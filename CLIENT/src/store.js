@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state : {
 		pseudo : '',
-		serie : []
+		serie : [],
+        token : ''
 	},
 	mutations: {
     	putPseudo (state, p) {
@@ -14,7 +15,10 @@ export default new Vuex.Store({
     	},
     	putSerie (state, s) {
     		state.serie = s
-    	}
+    	},
+        putToken(state,t){
+            state.token = t
+        },
     },
     getters: {
     	getPseudo: state => {
@@ -31,6 +35,9 @@ export default new Vuex.Store({
     	},
     	getLatitude: state => {
     		return state.serie.latitude
-    	}
+    	},
+        getToken : state =>{
+            return state.token
+        }
     }
 })
