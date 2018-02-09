@@ -17,7 +17,6 @@
 			<router-link :to="{ name: 'AfficherScores', params: {id:serie.id}}"><strong>{{serie.ville}}</strong></router-link>
 		</div>
 	</div>
-
 </template>
 
 <script>
