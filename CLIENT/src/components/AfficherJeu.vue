@@ -8,7 +8,7 @@
 			<div class="card p-5 float-left" v-if="!ok" style="height: 30vh; width: 20vw">
 				<h1>Score : </h1>
 				<h1 v-model="score">{{score}}</h1>
-				<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok | i == photos.length -1">Suivant</button>
+				<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok">Suivant</button>
 				<div v-model="count" class="rounded mt-3" style="background-color:blue;color:white;"><center>{{count}}</center></div>
 			</div>
 			<div class="card card-border" style="height: 75vh; width: 40vw">
@@ -128,7 +128,7 @@ export default {
 				score : this.score,
 				statut : 1,
 			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
-				this.$router.push({path: '/scores'});
+				this.$router.push({path: '/scores/'+this.$store.getters.getId});
 			})
 		}
 	}

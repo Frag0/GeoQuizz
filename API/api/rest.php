@@ -25,7 +25,6 @@ $app = new \Slim\App($c);
 $app->add(function($request, $response, callable $next){
     $response = $next($request, $response);
     $response = $response->withHeader('Content-type', 'application/json; charset=utf-8');
-
     $response = $response->withHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
     $response = $response->withHeader('Access-Control-Allow-Origin', $request->getHeader('Origin')[0]);
     $response = $response->withHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
@@ -43,7 +42,7 @@ $app->get('/series/{id}[/]','\geo\control\PlayerController:getSerieId');
 
 $app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
 
-$app->get('/parties[/]','\geo\control\PlayerController:getParties');
+$app->get('/series/{id}/parties[/]','\geo\control\PlayerController:getParties');
 
 $app->post('/parties[/]','\geo\control\PlayerController:postPartie');
 

@@ -18,7 +18,8 @@
 					<td>{{partie.score}}</td>
 				</tr>
 			</tbody>
-		</table>   
+		</table>
+		<center><router-link to="/">Retour à l'accueil</router-link></center>
 	</div>
 </template>
 
@@ -32,7 +33,7 @@ export default {
 		}
 	},
 	mounted(){
-		window.axios.get('parties').then(response => {
+		window.axios.get('series/'+this.$route.params.id+'/parties').then(response => {
 			this.parties = response.data.parties
 		})
 	},
