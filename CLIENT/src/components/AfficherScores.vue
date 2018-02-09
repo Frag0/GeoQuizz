@@ -18,7 +18,8 @@
 					<td>{{partie.score}}</td>
 				</tr>
 			</tbody>
-		</table>   
+		</table>
+		<center><router-link to="/">Retour à l'accueil</router-link></center>
 	</div>
 </template>
 
