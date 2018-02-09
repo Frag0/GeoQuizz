@@ -3,13 +3,13 @@
 		<h1 class="display-4">Bienvenue sur GeoQuizz!</h1>
 		<hr class="my-4">
 		<p>Bienvenue sur le meilleur jeu de positionnement géographique</p>
-		<form>
+		<form @submit.prevent="commencerPartie">
 			<label>Pseudo :</label><input type="text" v-model="pseudo" >
 			<label>Ville :</label>
 			<select v-model="ville" class="custom-select w-25">
 				<option v-for="serie in series" v-bind:value="serie.id">{{serie.ville}}</option>
 			</select>
-			<button class="btn btn-outline-success" @click="commencerPartie">Commencer</button>
+			<button class="btn btn-outline-success">Commencer</button>
 		</form>
 		<hr class="my-4">
 		<p>Classement</p>

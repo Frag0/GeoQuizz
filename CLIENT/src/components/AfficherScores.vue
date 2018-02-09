@@ -2,6 +2,9 @@
 	<div>
 		<div class="jumbotron">
 			<h1 class="display-4">Meilleurs scores</h1>
+			<div v-for="serie in series">
+				<h1 v-if="serie.id == $route.params.id" class="display-5">{{serie.ville}}</h1>
+			</div>
 		</div>
 		<table class="table">
 			<thead>
@@ -29,12 +32,17 @@ export default {
 	data (){
 		return {
 			parties: [],
-			partie: ''
+			partie: '',
+			series: [],
+			serie: ''
 		}
 	},
 	mounted(){
 		window.axios.get('series/'+this.$route.params.id+'/parties').then(response => {
 			this.parties = response.data.parties
+		})
+		window.axios.get('series/').then(response => {
+			this.series = response.data.series
 		})
 	},
 	methods:{		
