@@ -19,7 +19,7 @@ class PlayerController {
 
 	public function getSeries(Request $req, Response $resp, $args){
 
-		$series = Serie::orderBy('ville', 'ASC')->get();
+		$series = Serie::has('photos', '>', 9)->orderBy('ville', 'ASC')->get();
 		$t = count($series);
 		$tabseries = [
 			"type"=>'collection',
