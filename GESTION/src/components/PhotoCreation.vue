@@ -8,8 +8,8 @@
 			<div class="form-group">
 				<label for="ville">Ville</label>
 				<select id="ville" v-model="ville" class="custom-select">
-      				<option v-for="serie in series" v-bind:value="serie.id" @click="setMap(serie.latitude, serie.longitude)">{{serie.ville}}</option>
-      			</select>
+					<option v-for="serie in series" v-bind:value="serie.id" @click="setMap(serie.latitude, serie.longitude)">{{serie.ville}}</option>
+				</select>
 			</div>
 			<div id="mapid" style="width: 100%; height: 400px;"></div>
 			<center><button type="submit" class="btn btn-outline-primary">Créer</button></center>
@@ -37,8 +37,7 @@ export default {
 	},
 	mounted() {
 		window.axios.get('series').then(response => {
-			this.series = response.data.series
-			console.table(response.data.series)			
+			this.series = response.data.series		
 		})
 	},
 	methods: {
