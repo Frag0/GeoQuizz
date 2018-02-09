@@ -1,19 +1,29 @@
 <template>
-	<div class="mt-5">
-		<center><button class="btn btn-outline-success btn-lg btn-block w-75" @click="setMap" v-if="ok">Démarrer la partie</button></center>
-		<div class="card card-border float-left" v-if="!ok" style="height: 75vh; width: 40vw">
-			<img v-bind:src="url" style="max-witdh: 100%">
+	<div>
+		<div class="mt-5" v-if="this.$store.getters.getToken">
+			<center><button class="btn btn-outline-success btn-lg btn-block w-75" @click="setMap" v-if="ok">Démarrer la partie</button></center>
+			<div class="card card-border float-left" v-if="!ok" style="height: 75vh; width: 40vw">
+				<img v-bind:src="url" style="max-witdh: 100%">
+			</div>
+			<div class="card p-5 float-left" v-if="!ok" style="height: 30vh; width: 20vw">
+				<h1>Score : </h1>
+				<h1 v-model="score">{{score}}</h1>
+				<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok">Suivant</button>
+				<div v-model="count" class="rounded mt-3" style="background-color:blue;color:white;"><center>{{count}}</center></div>
+			</div>
+			<div class="card card-border" style="height: 75vh; width: 40vw">
+				<div id="mapid" class="float-right" style="height:100%; width:100%;"></div>
+			</div>
+			<center><button class="btn btn-outline-success btn-lg btn-block w-75" v-if="this.i === this.photos.length-1" @click="envoyer">Partie finie</button></center>
 		</div>
-		<div class="card p-5 float-left" v-if="!ok" style="height: 30vh; width: 20vw">
-			<h1>Score : </h1>
-			<h1 v-model="score">{{score}}</h1>
-			<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok">Suivant</button>
+		<div class="jumbotron" v-if="!this.$store.getters.getToken">
+		    <h2 class="display-4">Attention petit malin !</h2>
+		    <hr class="my-4">
+		    <p>Pour démarrer une partie, il faut définir ton pseudo et une ville :)</p>
+		<router-link to="/" class="btn btn-outline-success">Aller à l'accueil !</router-link>
 		</div>
-		<div class="card card-border" style="height: 75vh; width: 40vw">
-			<div id="mapid" class="float-right" style="height:100%; width:100%;"></div>
-		</div>
-		<center><button class="btn btn-outline-success btn-lg btn-block w-75" v-if="this.i === this.photos.length-1" @click="envoyer">Partie finie</button></center>
 	</div>
+
 </template>
 
 <script>
@@ -97,17 +107,20 @@ export default {
 			}
 		},
 		suivant(){
-			if(this.i === this.photos.length-1){
+			if(this.marker){
+				if(this.i == this.photos.length -1){
 				clearInterval(this.inter)
-			}
-			else{
-				this.i++;
-				this.url = this.photos[this.i].url
-				this.mymap.removeLayer(this.marker)
-				this.mymap.removeLayer(this.marker2)
-				this.marker=null
-				this.marker2=null
-				this.count=null
+				}
+				else{
+					console.log(this.i)
+					this.i++;
+					this.url = this.photos[this.i].url
+					this.mymap.removeLayer(this.marker)
+					this.mymap.removeLayer(this.marker2)
+					this.marker=null
+					this.marker2=null
+					this.count=0
+				}
 			}
 		},
 		envoyer(){
