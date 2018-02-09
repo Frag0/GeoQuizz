@@ -5,7 +5,7 @@
 			<div class="card card-border float-left" v-if="!ok" style="height: 75vh; width: 40vw">
 				<img v-bind:src="url" style="max-witdh: 100%">
 			</div>
-			<div class="card p-5 float-left" v-if="!ok" style="height: 30vh; width: 20vw">
+			<div class="card p-5 float-left" v-if="!ok" style="height: 35vh; width: 20vw">
 				<h1>Score : </h1>
 				<h1 v-model="score">{{score}}</h1>
 				<button class="btn btn-outline-success mt-5" @click="suivant" v-if="!ok">Suivant</button>
@@ -17,10 +17,13 @@
 			<center><button class="btn btn-outline-success btn-lg btn-block w-75" v-if="this.i === this.photos.length-1" @click="envoyer">Partie finie</button></center>
 		</div>
 		<div class="jumbotron" v-if="!this.$store.getters.getToken">
-		    <h2 class="display-4">Attention petit malin !</h2>
-		    <hr class="my-4">
-		    <p>Pour démarrer une partie, il faut définir ton pseudo et une ville :)</p>
-		<router-link to="/" class="btn btn-outline-success">Aller à l'accueil !</router-link>
+			<h2 class="display-4">Attention petit malin !</h2>
+			<hr class="my-4">
+			<p>Pour démarrer une partie, il faut définir ton pseudo et une ville :)</p>
+			<router-link to="/" class="btn btn-outline-success">Aller à l'accueil !</router-link>
+		</div>
+		<div class="card-footer text-muted fixed-bottom">
+			<center>{{this.message}}</center>
 		</div>
 	</div>
 
@@ -41,7 +44,8 @@ export default {
 			marker2 : 0,
 			count : 0,
 			inter : 0,
-			temps : 0
+			temps : 0,
+			message: null
 		}
 	},
 	methods : {
@@ -71,67 +75,94 @@ export default {
 			//calcul de distance
 			if(this.count < 20){
 				if(distance < 400){
-					if(this.count<5)this.score = this.score + 5*4
-					else if(this.count<10)this.score = this.score + 5*2
-					else if(this.count<20)this.score = this.score + 5
+					if(this.count<5){
+						this.score = this.score + 5*4;
+						this.message = "Vous avez marqué : 20 points !";
+					}
+					else if(this.count<10){
+						this.score = this.score + 5*2;
+						this.message = "Vous avez marqué : 10 points !";
+					}
+					else if(this.count<20){
+						this.score = this.score + 5;
+						this.message = "Vous avez marqué : 5 points !";
+					}
 				}
 				else if(distance < 800){
-					if(this.count<5)this.score = this.score + 3*4
-					else if(this.count<10)this.score = this.score + 3*2
-					else if(this.count<20)this.score = this.score + 3
+					if(this.count<5){
+						this.score = this.score + 3*4;
+						this.message = "Vous avez marqué : 12 points !";
+					}
+					else if(this.count<10){
+						this.score = this.score + 3*2;
+						this.message = "Vous avez marqué : 6 points !";
+					}
+					else if(this.count<20){
+						this.score = this.score + 3;
+						this.message = "Vous avez marqué : 3 points !";
+					}
 				}
 				else if(distance < 1200){
-					if(this.count<5)this.score = this.score + 1*4
-					else if(this.count<10)this.score = this.score + 1*2
-					else if(this.count<20)this.score = this.score + 1
+					if(this.count<5){
+						this.score = this.score + 1*4;
+						this.message = "Vous avez marqué : 4 points !";
+					}
+					else if(this.count<10){
+						this.score = this.score + 1*2;
+						this.message = "Vous avez marqué : 2 points !";
+					}
+					else if(this.count<20){
+						this.score = this.score + 1;
+						this.message = "Vous avez marqué : 1 points !";
+					}
 				}
 				else{
-					console.log("T'es naze !")
+					this.message = "Vous n'avez pas marqué de points ! "
 				}
 			}
 			else{
-				console.log(" pas de point")
-				}
+				this.message = "Vous avez mis trop de temps à répondre !"
 			}
-		},
-		setInter(){
-			console.log(this.marker)
-			this.inter = setInterval(this.timer,1000);
-		},
-		timer(){
-			if(!this.marker){
-				this.count ++;
-			}
-			else{
-				this.temps = this.count
-			}
-		},
-		suivant(){
-			if(this.marker){
-				if(this.i == this.photos.length -1){
-				clearInterval(this.inter)
-				}
-				else{
-					console.log(this.i)
-					this.i++;
-					this.url = this.photos[this.i].url
-					this.mymap.removeLayer(this.marker)
-					this.mymap.removeLayer(this.marker2)
-					this.marker=null
-					this.marker2=null
-					this.count=0
-				}
-			}
-		},
-		envoyer(){
-				window.axios.put('parties',{
-				score : this.score,
-				statut : 1,
-			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
-				this.$router.push({path: '/scores/'+this.$store.getters.getId});
-			})
 		}
+	},
+	setInter(){
+		console.log(this.marker)
+		this.inter = setInterval(this.timer,1000);
+	},
+	timer(){
+		if(!this.marker){
+			this.count ++;
+		}
+		else{
+			this.temps = this.count
+		}
+	},
+	suivant(){
+		if(this.marker){
+			if(this.i == this.photos.length -1){
+				clearInterval(this.inter)
+			}
+			else{
+				console.log(this.i)
+				this.i++;
+				this.url = this.photos[this.i].url
+				this.mymap.removeLayer(this.marker)
+				this.mymap.removeLayer(this.marker2)
+				this.marker=null
+				this.marker2=null
+				this.count=0
+			}
+		}
+	},
+	envoyer(){
+		window.axios.put('parties',{
+			score : this.score,
+			statut : 1,
+		},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
+			this.$router.push({path: '/scores/'+this.$store.getters.getId});
+		})
 	}
+}
 }
 
 </script>
