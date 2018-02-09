@@ -33,7 +33,7 @@ export default {
 		}
 	},
 	mounted(){
-		window.axios.get('parties').then(response => {
+		window.axios.get('series/'+this.$route.params.id+'/parties').then(response => {
 			this.parties = response.data.parties
 		})
 	},

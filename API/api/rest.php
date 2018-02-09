@@ -43,7 +43,7 @@ $app->get('/series/{id}[/]','\geo\control\PlayerController:getSerieId');
 
 $app->get('/series/{id}/photos[/]','\geo\control\PlayerController:getPhotos');
 
-$app->get('/parties[/]','\geo\control\PlayerController:getParties');
+$app->get('/series/{id}/parties[/]','\geo\control\PlayerController:getParties');
 
 $app->post('/parties[/]','\geo\control\PlayerController:postPartie');
 

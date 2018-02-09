@@ -115,7 +115,7 @@ export default {
 				score : this.score,
 				statut : 1,
 			},{headers: {'Authorization': 'Bearer '+this.$store.getters.getToken}}).then(response =>{
-				this.$router.push({path: '/scores'});
+				this.$router.push({path: '/scores/'+this.$store.getters.getId});
 			})
 		}
 	}
